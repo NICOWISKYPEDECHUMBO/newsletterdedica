@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel Newsletter</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--tx:#1d2733;--mut:#6b7785;--ln:#e1e6eb;--pri:#0f7b6c;--pri2:#0a5e52;--err:#c0392b;--warn:#d68910;--ok:#1e8449;--r:10px}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);font-size:14px}
+header{background:var(--pri);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{font-size:18px;margin:0;flex:1}
+header .stats{display:flex;gap:16px;font-size:13px;opacity:.95}
+header .stats b{font-size:16px}
+nav{display:flex;gap:4px;padding:0 22px;background:#fff;border-bottom:1px solid var(--ln)}
+nav button{border:0;background:none;padding:13px 16px;font-size:14px;cursor:pointer;color:var(--mut);border-bottom:3px solid transparent;font-weight:600}
+nav button.on{color:var(--pri);border-bottom-color:var(--pri)}
+main{padding:20px 22px;max-width:1200px;margin:0 auto}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.bar .sp{flex:1}
+.btn{border:1px solid var(--ln);background:#fff;padding:8px 13px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap}
+.btn:hover{background:#f0f3f5}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.pri:hover{background:var(--pri2)}
+.btn.dan{color:var(--err);border-color:#f0c4bf}
+.btn.sm{padding:4px 9px;font-size:12px}
+input[type=text],input[type=email],input[type=number],select,textarea{border:1px solid var(--ln);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;background:#fff;width:100%}
+.bar input[type=text]{width:260px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:var(--r)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;color:var(--mut);font-weight:700;padding:10px;border-bottom:1px solid var(--ln);background:#fafbfc;position:sticky;top:0;text-transform:uppercase}
+td{padding:0;border-bottom:1px solid var(--ln)}
+td.cell{padding:2px 4px}
+td.cell input,td.cell select{border:1px solid transparent;background:transparent;padding:7px 6px;border-radius:6px}
+td.cell input:focus,td.cell select:focus{border-color:var(--pri);background:#fff;outline:none}
+td.c{text-align:center;padding:6px}
+tr.bad td.cell input[data-f=email]{color:var(--err)}
+.tw{max-height:calc(100vh - 260px);overflow:auto}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.p-rasc{background:#fdf2e1;color:var(--warn)}.p-pronto{background:#e3f1fb;color:#1f6fa8}.p-env{background:#e3f4ea;color:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.ed{padding:16px;display:flex;flex-direction:column;gap:8px}
+.ed h3{margin:0;font-size:15px}
+.ed .mt{color:var(--mut);font-size:12px}
+.ed .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.empty{padding:40px;text-align:center;color:var(--mut)}
+.modal{position:fixed;inset:0;background:rgba(15,25,35,.5);display:none;align-items:flex-start;justify-content:center;padding:30px 14px;z-index:50;overflow:auto}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:14px;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.mbox.lg{max-width:1100px}
+.mh{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ln)}
+.mh h2{margin:0;font-size:16px;flex:1}
+.mh .x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--mut)}
+.mb{padding:18px;display:flex;flex-direction:column;gap:12px}
+.mf{padding:12px 18px;border-top:1px solid var(--ln);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:var(--mut)}
+.row{display:flex;gap:12px}.row>*{flex:1}
+.tb{display:flex;gap:4px;flex-wrap:wrap;padding:6px;border:1px solid var(--ln);border-bottom:0;border-radius:8px 8px 0 0;background:#fafbfc}
+.tb button{border:1px solid transparent;background:none;padding:5px 9px;border-radius:6px;cursor:pointer;font-size:13px}
+.tb button:hover{background:#e8edf1;border-color:var(--ln)}
+.rte{min-height:320px;border:1px solid var(--ln);border-radius:0 0 8px 8px;padding:14px;outline:none;line-height:1.6;overflow:auto;max-height:55vh}
+.rte img{max-width:100%}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pv{border:1px solid var(--ln);border-radius:8px;background:#eef1f4;overflow:hidden}
+.pv iframe{width:100%;height:560px;border:0;background:#eef1f4;display:block}
+.pvbar{display:flex;gap:6px;padding:6px;border-bottom:1px solid var(--ln);background:#fff}
+.hint{font-size:12px;color:var(--mut);background:#f6f8fa;border:1px dashed var(--ln);border-radius:8px;padding:9px 11px;line-height:1.5}
+.hint code{background:#e8edf1;padding:1px 5px;border-radius:4px}
+pre.cmd{background:#0f1a24;color:#d7e3ee;padding:12px;border-radius:8px;max-height:240px;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-all;margin:0}
+.lote{border:1px solid var(--ln);border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lote b{flex:1}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d2733;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+.toast.on{opacity:1}
+.kp{display:flex;gap:10px;flex-wrap:wrap}
+.kp div{background:#f6f8fa;border-radius:8px;padding:8px 12px;font-size:12px;color:var(--mut)}
+.kp b{display:block;font-size:18px;color:var(--tx)}
+@media(max-width:800px){.split{grid-template-columns:1fr}.bar input[type=text]{width:100%}header .stats{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="hTitle">📰 Painel Newsletter</h1>
+  <div class="stats">
+    <span><b id="sAtivos">0</b> ativos</span>
+    <span><b id="sRasc">0</b> rascunhos</span>
+    <span><b id="sEnv">0</b> enviadas</span>
+  </div>
+  <button class="btn sm" onclick="abrirConfig()">⚙️ Config</button>
+</header>
+<nav>
+  <button class="on" data-tab="insc" onclick="tab('insc')">👥 Inscritos</button>
+  <button data-tab="ed" onclick="tab('ed')">✍️ Edições / Rascunhos</button>
+  <button data-tab="hist" onclick="tab('hist')">🚀 Disparos</button>
+</nav>
+<main>
+  <!-- INSCRITOS -->
+  <section id="t-insc">
+    <div class="bar">
+      <input type="text" id="busca" placeholder="🔎 Buscar nome, e-mail ou tag..." oninput="renderInsc()">
+      <select id="fStatus" onchange="renderInsc()" style="width:auto">
+        <option value="">Todos</option><option value="ativo">Ativos</option><option value="descadastrado">Descadastrados</option>
+      </select>
+      <span class="sp"></span>
+      <button class="btn" onclick="addInsc()">➕ Adicionar linha</button>
+      <button class="btn" onclick="abrirMassa()">📋 Colar vários</button>
+      <button class="btn pri" onclick="document.getElementById('fUp').click()">📤 Subir planilha</button>
+      <input type="file" id="fUp" accept=".xlsx,.csv,.txt" hidden onchange="lerPlanilha(this)">
+      <button class="btn" onclick="exportCSV()">⬇️ CSV</button>
+    </div>
+    <div class="card tw">
+      <table>
+        <thead><tr><th style="width:36px"></th><th>Nome</th><th>E-mail</th><th>Tags</th><th style="width:150px">Status</th><th style="width:110px">Inscrito em</th><th style="width:44px"></th></tr></thead>
+        <tbody id="tbInsc"></tbody>
+      </table>
+      <div id="emptyInsc" class="empty" hidden>Nenhum inscrito ainda. Suba uma planilha ou adicione na mão.</div>
+    </div>
+    <div class="bar" style="margin-top:10px">
+      <span id="selInfo" class="mt" style="color:var(--mut)"></span><span class="sp"></span>
+      <button class="btn dan sm" onclick="apagarSel()">🗑️ Apagar selecionados</button>
+    </div>
+  </section>
+
+  <!-- EDIÇÕES -->
+  <section id="t-ed" hidden>
+    <div class="bar"><span class="sp"></span><button class="btn pri" onclick="novaEd()">➕ Nova edição</button></div>
+    <div class="grid" id="gridEd"></div>
+    <div id="emptyEd" class="empty" hidden>Nenhuma edição. Clique em “Nova edição”.</div>
+  </section>
+
+  <!-- HISTÓRICO -->
+  <section id="t-hist" hidden>
+    <div class="card tw">
+      <table>
+        <thead><tr><th>Data</th><th>Edição</th><th>Destinatários</th><th>Resultado</th><th style="width:220px"></th></tr></thead>
+        <tbody id="tbHist"></tbody>
+      </table>
+      <div id="emptyHist" class="empty" hidden>Nenhum disparo ainda.</div>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL EDITOR -->
+<div class="modal" id="mEd"><div class="mbox lg">
+  <div class="mh"><h2 id="edTit">Edição</h2><span id="edSalvo" class="mt" style="color:var(--mut);font-size:12px;margin-right:12px"></span><button class="x" onclick="fecharEd()">×</button></div>
+  <div class="mb">
+    <div class="row">
+      <label class="f">Assunto<input type="text" id="edAssunto" oninput="autoSalvar()"></label>
+      <label class="f" style="max-width:170px">Status<select id="edStatus" onchange="autoSalvar()"><option value="rascunho">Rascunho</option><option value="pronto">Pronto p/ envio</option><option value="enviado">Enviado</option></select></label>
+    </div>
+    <label class="f">Pré-cabeçalho (texto que aparece ao lado do assunto na caixa de entrada)<input type="text" id="edPre" oninput="autoSalvar()"></label>
+    <div class="split">
+      <div>
+        <div class="tb">
+          <button onclick="cmd('formatBlock','H2')" title="Título"><b>T</b></button>
+          <button onclick="cmd('formatBlock','H3')" title="Subtítulo">t</button>
+          <button onclick="cmd('formatBlock','P')" title="Parágrafo">¶</button>
+          <button onclick="cmd('bold')"><b>N</b></button>
+          <button onclick="cmd('italic')"><i>I</i></button>
+          <button onclick="cmd('underline')"><u>S</u></button>
+          <button onclick="cmd('insertUnorderedList')">• Lista</button>
+          <button onclick="inserirLink()">🔗 Link</button>
+          <button onclick="inserirImg()">🖼️ Imagem</button>
+          <button onclick="inserirBotao()">🔘 Botão</button>
+          <button onclick="inserirNome()" title="Insere o nome do inscrito">👤 {{nome}}</button>
+          <button onclick="cmd('removeFormat')" title="Limpar formatação">⌫</button>
+        </div>
+        <div class="rte" id="rte" contenteditable="true" oninput="autoSalvar()"></div>
+      </div>
+      <div class="pv">
+        <div class="pvbar"><button class="btn sm" onclick="pvW(640)">🖥️ PC</button><button class="btn sm" onclick="pvW(375)">📱 Celular</button><span style="flex:1"></span><span class="mt" style="font-size:12px;color:var(--mut);align-self:center">Pré-visualização</span></div>
+        <div style="display:flex;justify-content:center"><iframe id="pvFrame" style="max-width:640px"></iframe></div>
+      </div>
+    </div>
+  </div>
+  <div class="mf">
+    <button class="btn dan" onclick="apagarEd(edAtual)">🗑️ Apagar</button>
+    <span style="flex:1"></span>
+    <button class="btn" onclick="baixarHTML()">⬇️ Baixar HTML</button>
+    <button class="btn" onclick="fecharEd()">Salvar rascunho e fechar</button>
+    <button class="btn pri" onclick="salvarEd(true);fecharEd();abrirDisparo(edAtualId)">🚀 Disparar</button>
+  </div>
+</div></div>
+
+<!-- MODAL IMPORTAÇÃO -->
+<div class="modal" id="mImp"><div class="mbox">
+  <div class="mh"><h2>📤 Importar planilha</h2><button class="x" onclick="fechar('mImp')">×</button></div>
+  <div class="mb">
+    <div class="row">
+      <label class="f">Coluna do E-MAIL<select id="impEmail" onchange="previewImp()"></select></label>
+      <label class="f">Coluna do NOME<select id="impNome" onchange="previewImp()"></select></label>
+      <label class="f">Coluna de TAGS (opcional)<select id="impTag" onchange="previewImp()"></select></label>
+    </div>
+    <label class="f">Tag extra para todos desta planilha (opcional)<input type="text" id="impTagFix" placeholder="ex: clientes-2026" oninput="previewImp()"></label>
+    <div class="kp" id="impKp"></div>
+    <div class="card" style="max-height:240px;overflow:auto"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Situação</th></tr></thead><tbody id="impPrev"></tbody></table></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="fechar('mImp')">Cancelar</button><button class="btn pri" onclick="confirmarImp()">Importar</button></div>
+</div></div>
+
+<!-- MODAL COLAR -->
+<div class="modal" id="mMassa"><div class="mbox">
+  <div class="mh"><h2>📋 Colar vários e-mails</h2><button class="x" onclick="fechar('mMassa')">×</button></div>
+  <div class="mb">
+    <div class="hint">Um por linha. Pode ser só o e-mail ou <code>Nome; email</code> / <code>Nome, email</code> / colado direto do Excel.</div>
+    <textarea id="massaTx" rows="10" placeholder="Maria Silva; maria@gmail.com&#10;joao@hotmail.com"></textarea>
+    <label class="f">Tag para todos (opcional)<input type="text" id="massaTag"></label>
+  </div>
+  <div class="mf"><button class="btn" onclick="fechar('mMassa')">Cancelar</button><button class="btn pri" onclick="confirmarMassa()">Adicionar</button></div>
+</div></div>
+
+<!-- MODAL DISPARO -->
+<div class="modal" id="mDisp"><div class="mbox">
+  <div class="mh"><h2>🚀 Disparo via OpenBot (Gmail)</h2><button class="x" onclick="fechar('mDisp')">×</button></div>
+  <div class="mb">
+    <label class="f">Edição<select id="dEd" onchange="calcDisp()"></select></label>
+    <div class="row">
+      <label class="f">Público<select id="dPub" onchange="calcDisp()"></select></label>
+      <label class="f" style="max-width:160px">E-mails por lote<input type="number" id="dLote" value="50" min="1" max="500" oninput="calcDisp()"></label>
+    </div>
+    <div class="kp" id="dKp"></div>
+    <div class="hint">
+      <b>Como funciona:</b> o painel gera um comando para cada lote. Você copia e cola no chat do OpenBot (com a skill <code>newsletter-gmail</code> instalada e o plugin Gmail conectado). Ele envia um e-mail individual para cada pessoa e devolve um relatório — cole esse relatório na aba <b>Disparos → Registrar retorno</b>.<br>
+      ⚠️ Limite do Gmail: ~500 envios/dia (conta comum) ou ~2.000/dia (Google Workspace). Divida em dias se passar disso.
+    </div>
+    <div class="row">
+      <label class="f">E-mail de teste<input type="email" id="dTeste" placeholder="seu@email.com"></label>
+      <div style="display:flex;align-items:flex-end;max-width:180px"><button class="btn" style="width:100%" onclick="copiarTeste()">🧪 Copiar comando de teste</button></div>
+    </div>
+    <div id="dLotes" style="display:flex;flex-direction:column;gap:8px"></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="fechar('mDisp')">Fechar</button><button class="btn pri" onclick="registrarDisparo()">✅ Registrar disparo no histórico</button></div>
+</div></div>
+
+<!-- MODAL RETORNO -->
+<div class="modal" id="mRet"><div class="mbox">
+  <div class="mh"><h2>📥 Registrar retorno do OpenBot</h2><button class="x" onclick="fechar('mRet')">×</button></div>
+  <div class="mb">
+    <div class="hint">Cole aqui o relatório que o OpenBot devolveu (linhas <code>OK email</code> e <code>ERRO email motivo</code>). O painel marca cada destinatário. E-mails com <code>SAIR</code> são descadastrados automaticamente.</div>
+    <textarea id="retTx" rows="10"></textarea>
+  </div>
+  <div class="mf"><button class="btn" onclick="fechar('mRet')">Cancelar</button><button class="btn pri" onclick="confirmarRet()">Registrar</button></div>
+</div></div>
+
+<!-- MODAL DETALHE DISPARO -->
+<div class="modal" id="mDet"><div class="mbox">
+  <div class="mh"><h2 id="detTit">Detalhe</h2><button class="x" onclick="fechar('mDet')">×</button></div>
+  <div class="mb"><div class="kp" id="detKp"></div><div class="card" style="max-height:380px;overflow:auto"><table><thead><tr><th>E-mail</th><th>Status</th><th>Obs.</th></tr></thead><tbody id="detTb"></tbody></table></div></div>
+  <div class="mf"><button class="btn" onclick="reenviarErros()">🔁 Copiar comando p/ reenviar pendentes/erros</button><button class="btn" onclick="fechar('mDet')">Fechar</button></div>
+</div></div>
+
+<!-- MODAL CONFIG -->
+<div class="modal" id="mCfg"><div class="mbox">
+  <div class="mh"><h2>⚙️ Configurações</h2><button class="x" onclick="fechar('mCfg')">×</button></div>
+  <div class="mb">
+    <label class="f">Nome da newsletter<input type="text" id="cNome"></label>
+    <div class="row">
+      <label class="f">Cor principal<input type="color" id="cCor" style="height:38px;padding:2px"></label>
+      <label class="f">Site (link no rodapé)<input type="text" id="cSite"></label>
+    </div>
+    <label class="f">URL do logo (opcional)<input type="text" id="cLogo" placeholder="https://..."></label>
+    <label class="f">Texto do rodapé<textarea id="cRod" rows="3"></textarea></label>
+    <div class="hint">💾 Os dados ficam salvos neste navegador. Faça backup de vez em quando.</div>
+    <div class="row"><button class="btn" onclick="exportBackup()">⬇️ Baixar backup (.json)</button><button class="btn" onclick="document.getElementById('fBk').click()">⬆️ Restaurar backup</button><input type="file" id="fBk" accept=".json" hidden onchange="importBackup(this)"></div>
+  </div>
+  <div class="mf"><button class="btn" onclick="fechar('mCfg')">Cancelar</button><button class="btn pri" onclick="salvarCfg()">Salvar</button></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================== DADOS ================== */
+const KEY='painelNewsletter_v1';
+let DB={cfg:{nome:'News Dedica Saúde',cor:'#0f7b6c',site:'',logo:'',rodape:'Você recebe este e-mail porque se inscreveu na nossa newsletter.\nPara não receber mais, responda este e-mail com a palavra SAIR.'},insc:[],eds:[],disp:[]};
+try{const s=localStorage.getItem(KEY);if(s)DB=Object.assign(DB,JSON.parse(s));}catch(e){}
+function salvar(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){toast('⚠️ Não consegui salvar no navegador');}renderStats();}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const hoje=()=>new Date().toISOString().slice(0,10);
+const fmtD=d=>d?d.slice(0,10).split('-').reverse().join('/'):'';
+const fmtDH=d=>{const x=new Date(d);return x.toLocaleDateString('pt-BR')+' '+x.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const okEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e||'');
+const normE=e=>String(e||'').trim().toLowerCase();
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2400);}
+function abrir(id){document.getElementById(id).classList.add('on')}
+function fechar(id){document.getElementById(id).classList.remove('on')}
+function copiar(txt,msg){navigator.clipboard.writeText(txt).then(()=>toast(msg||'Copiado!')).catch(()=>{const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast(msg||'Copiado!')});}
+function baixar(nome,conteudo,tipo){const b=new Blob([conteudo],{type:tipo});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=nome;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+
+function tab(t){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));['insc','ed','hist'].forEach(x=>document.getElementById('t-'+x).hidden=x!==t);if(t==='ed')renderEds();if(t==='hist')renderHist();}
+function renderStats(){document.getElementById('sAtivos').textContent=DB.insc.filter(i=>i.status==='ativo').length;document.getElementById('sRasc').textContent=DB.eds.filter(e=>e.status!=='enviado').length;document.getElementById('sEnv').textContent=DB.eds.filter(e=>e.status==='enviado').length;document.getElementById('hTitle').textContent='📰 '+DB.cfg.nome;}
+
+/* ================== INSCRITOS ================== */
+let sel=new Set();
+function renderInsc(){
+  const q=document.getElementById('busca').value.toLowerCase().trim(),fs=document.getElementById('fStatus').value;
+  const lista=DB.insc.filter(i=>(!fs||i.status===fs)&&(!q||(i.nome+' '+i.email+' '+i.tags).toLowerCase().includes(q)));
+  const tb=document.getElementById('tbInsc');
+  tb.innerHTML=lista.map(i=>`<tr data-id="${i.id}" class="${okEmail(i.email)?'':'bad'}">
+    <td class="c"><input type="checkbox" ${sel.has(i.id)?'checked':''} onchange="tSel('${i.id}',this.checked)"></td>
+    <td class="cell"><input type="text" data-f="nome" value="${esc(i.nome)}" onchange="edI('${i.id}','nome',this.value)"></td>
+    <td class="cell"><input type="text" data-f="email" value="${esc(i.email)}" onchange="edI('${i.id}','email',this.value)"></td>
+    <td class="cell"><input type="text" data-f="tags" value="${esc(i.tags)}" placeholder="—" onchange="edI('${i.id}','tags',this.value)"></td>
+    <td class="cell"><select onchange="edI('${i.id}','status',this.value)"><option value="ativo" ${i.status==='ativo'?'selected':''}>✅ Ativo</option><option value="descadastrado" ${i.status!=='ativo'?'selected':''}>🚫 Descadastrado</option></select></td>
+    <td class="c" style="color:var(--mut);font-size:12px">${fmtD(i.data)}</td>
+    <td class="c"><button class="btn sm dan" onclick="apagarI('${i.id}')">✕</button></td></tr>`).join('');
+  document.getElementById('emptyInsc').hidden=DB.insc.length>0;
+  document.getElementById('selInfo').textContent=`${lista.length} exibidos de ${DB.insc.length}`+(sel.size?` · ${sel.size} selecionados`:'');
+}
+function tSel(id,v){v?sel.add(id):sel.delete(id);renderInsc();}
+function edI(id,f,v){const i=DB.insc.find(x=>x.id===id);if(!i)return;
+  if(f==='email'){v=normE(v);if(DB.insc.some(x=>x.id!==id&&x.email===v)){toast('⚠️ Esse e-mail já existe');renderInsc();return;}if(!okEmail(v))toast('⚠️ E-mail parece inválido');}
+  i[f]=v;salvar();if(f==='email'||f==='status')renderInsc();}
+function addInsc(){const i={id:uid(),nome:'',email:'',tags:'',status:'ativo',data:hoje()};DB.insc.unshift(i);salvar();document.getElementById('busca').value='';document.getElementById('fStatus').value='';renderInsc();setTimeout(()=>document.querySelector(`tr[data-id="${i.id}"] input[data-f=nome]`)?.focus(),30);}
+function apagarI(id){const i=DB.insc.find(x=>x.id===id);if(!confirm(`Apagar ${i.email||'esta linha'}?`))return;DB.insc=DB.insc.filter(x=>x.id!==id);sel.delete(id);salvar();renderInsc();}
+function apagarSel(){if(!sel.size)return toast('Nenhum selecionado');if(!confirm(`Apagar ${sel.size} inscrito(s)? Não dá pra desfazer.`))return;DB.insc=DB.insc.filter(x=>!sel.has(x.id));sel.clear();salvar();renderInsc();}
+function exportCSV(){const l=[['Nome','Email','Tags','Status','Inscrito em']].concat(DB.insc.map(i=>[i.nome,i.email,i.tags,i.status,fmtD(i.data)]));baixar('inscritos.csv','﻿'+l.map(r=>r.map(c=>'"'+String(c??'').replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv;charset=utf-8');}
+
+/* colar vários */
+function abrirMassa(){document.getElementById('massaTx').value='';document.getElementById('massaTag').value='';abrir('mMassa');}
+function confirmarMassa(){const tag=document.getElementById('massaTag').value.trim();let add=0,dup=0,inv=0;const ex=new Set(DB.insc.map(i=>i.email));
+  document.getElementById('massaTx').value.split(/\r?\n/).forEach(l=>{l=l.trim();if(!l)return;const m=l.match(/[^\s@;,\t<>"]+@[^\s@;,\t<>"]+/);if(!m){inv++;return;}const e=normE(m[0]);if(!okEmail(e)){inv++;return;}if(ex.has(e)){dup++;return;}
+    let nome=l.replace(m[0],'').replace(/[;,\t<>"]/g,' ').replace(/\s+/g,' ').trim();ex.add(e);DB.insc.unshift({id:uid(),nome,email:e,tags:tag,status:'ativo',data:hoje()});add++;});
+  salvar();renderInsc();fechar('mMassa');toast(`✅ ${add} adicionados · ${dup} repetidos · ${inv} inválidos`);}
+
+/* ===== leitura de planilha (CSV / XLSX sem biblioteca) ===== */
+let IMP={cab:[],linhas:[]};
+async function lerPlanilha(inp){const f=inp.files[0];inp.value='';if(!f)return;
+  try{let rows;if(/\.xlsx$/i.test(f.name))rows=await lerXLSX(await f.arrayBuffer());else rows=lerCSV(await lerTexto(f));
+    rows=rows.filter(r=>r.some(c=>String(c).trim()));if(rows.length<1)return toast('Planilha vazia');
+    // detecta se 1ª linha é cabeçalho
+    const temCab=!rows[0].some(c=>okEmail(normE(c)));
+    IMP.cab=temCab?rows[0].map((c,i)=>String(c).trim()||('Coluna '+(i+1))):rows[0].map((c,i)=>'Coluna '+(i+1));
+    IMP.linhas=temCab?rows.slice(1):rows;
+    const opts=(sem)=>(sem?'<option value="-1">— nenhuma —</option>':'')+IMP.cab.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');
+    const sE=document.getElementById('impEmail'),sN=document.getElementById('impNome'),sT=document.getElementById('impTag');
+    sE.innerHTML=opts(false);sN.innerHTML=opts(true);sT.innerHTML=opts(true);
+    let iE=IMP.cab.findIndex(c=>/e-?mail/i.test(c));if(iE<0){iE=IMP.cab.findIndex((c,i)=>IMP.linhas.slice(0,20).some(r=>okEmail(normE(r[i]))));}if(iE<0)iE=0;
+    const iN=IMP.cab.findIndex(c=>/^(nome|name|cliente|contato|raz)/i.test(c.trim()));
+    const iT=IMP.cab.findIndex(c=>/tag|grupo|categoria|segmento/i.test(c));
+    sE.value=iE;sN.value=iN;sT.value=iT;document.getElementById('impTagFix').value='';
+    previewImp();abrir('mImp');
+  }catch(e){console.error(e);toast('❌ Não consegui ler esse arquivo');}
+}
+function lerTexto(f){return f.arrayBuffer().then(b=>{let t=new TextDecoder('utf-8').decode(b);if(t.includes('�'))t=new TextDecoder('windows-1252').decode(b);return t.replace(/^﻿/,'');});}
+function lerCSV(t){const d=(t.split('\n')[0].match(/;/g)||[]).length>=(t.split('\n')[0].match(/,/g)||[]).length?';':(t.includes('\t')?'\t':',');
+  const rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}else if(ch==='"')q=true;else if(ch===d){r.push(c);c='';}else if(ch==='\n'){r.push(c.replace(/\r$/,''));rows.push(r);r=[];c='';}else c+=ch;}
+  if(c||r.length){r.push(c.replace(/\r$/,''));rows.push(r);}return rows;}
+async function unzip(buf){const dv=new DataView(buf),u8=new Uint8Array(buf);let eo=-1;for(let i=buf.byteLength-22;i>=0;i--){if(dv.getUint32(i,true)===0x06054b50){eo=i;break;}}if(eo<0)throw'zip';
+  const n=dv.getUint16(eo+10,true);let p=dv.getUint32(eo+16,true);const files={};
+  for(let k=0;k<n;k++){const met=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true);
+    const nome=new TextDecoder().decode(u8.subarray(p+46,p+46+nl));files[nome]={met,cs,lo};p+=46+nl+el+cl;}
+  return async nome=>{const f=files[nome];if(!f)return null;const ds=f.lo+30+dv.getUint16(f.lo+26,true)+dv.getUint16(f.lo+28,true);const data=u8.slice(ds,ds+f.cs);
+    if(f.met===0)return new TextDecoder().decode(data);const st=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return await new Response(st).text();};}
+async function lerXLSX(buf){const get=await unzip(buf),X=s=>new DOMParser().parseFromString(s,'application/xml');
+  const ss=[];const sst=await get('xl/sharedStrings.xml');if(sst)X(sst).querySelectorAll('si').forEach(si=>ss.push([...si.getElementsByTagName('t')].map(t=>t.textContent).join('')));
+  let path='xl/worksheets/sheet1.xml';try{const wb=X(await get('xl/workbook.xml')),rid=wb.getElementsByTagName('sheet')[0].getAttribute('r:id'),rels=X(await get('xl/_rels/workbook.xml.rels'));const rel=[...rels.getElementsByTagName('Relationship')].find(r=>r.getAttribute('Id')===rid);if(rel){let t=rel.getAttribute('Target');path=t.startsWith('/')?t.slice(1):'xl/'+t;}}catch(e){}
+  const sh=X(await get(path));const rows=[];
+  [...sh.getElementsByTagName('row')].forEach(row=>{const r=[];[...row.getElementsByTagName('c')].forEach(c=>{const ref=c.getAttribute('r')||'';let col=0;for(const ch of ref.replace(/\d/g,''))col=col*26+ch.charCodeAt(0)-64;col--;
+    const t=c.getAttribute('t'),v=c.getElementsByTagName('v')[0]?.textContent??'';let val;if(t==='s')val=ss[+v]??'';else if(t==='inlineStr')val=[...c.getElementsByTagName('t')].map(x=>x.textContent).join('');else val=v;r[col<0?r.length:col]=val;});
+    rows.push([...r].map(x=>x??''));});return rows;}
+function calcImp(){const iE=+document.getElementById('impEmail').value,iN=+document.getElementById('impNome').value,iT=+document.getElementById('impTag').value,fix=document.getElementById('impTagFix').value.trim();
+  const ex=new Set(DB.insc.map(i=>i.email)),vistos=new Set();return IMP.linhas.map(r=>{const e=normE(r[iE]);const nome=iN>=0?String(r[iN]??'').trim():'';let tags=iT>=0?String(r[iT]??'').trim():'';if(fix)tags=tags?tags+', '+fix:fix;
+    let sit='novo';if(!okEmail(e))sit='inválido';else if(ex.has(e)||vistos.has(e))sit='repetido';vistos.add(e);return{nome,email:e,tags,sit};});}
+function previewImp(){const l=calcImp(),c=s=>l.filter(x=>x.sit===s).length;
+  document.getElementById('impKp').innerHTML=`<div><b>${l.length}</b>linhas</div><div><b style="color:var(--ok)">${c('novo')}</b>novos</div><div><b style="color:var(--warn)">${c('repetido')}</b>repetidos</div><div><b style="color:var(--err)">${c('inválido')}</b>inválidos</div>`;
+  document.getElementById('impPrev').innerHTML=l.slice(0,100).map(x=>`<tr><td class="cell" style="padding:7px 10px">${esc(x.nome)}</td><td style="padding:7px 10px">${esc(x.email)}</td><td style="padding:7px 10px;color:${x.sit==='novo'?'var(--ok)':x.sit==='repetido'?'var(--warn)':'var(--err)'}">${x.sit}</td></tr>`).join('');}
+function confirmarImp(){const n=calcImp().filter(x=>x.sit==='novo');if(!n.length)return toast('Nada novo para importar');n.forEach(x=>DB.insc.push({id:uid(),nome:x.nome,email:x.email,tags:x.tags,status:'ativo',data:hoje()}));salvar();renderInsc();fechar('mImp');toast(`✅ ${n.length} inscritos importados`);}
+
+/* ================== EDIÇÕES ================== */
+let edAtualId=null,edT=null;const edAtual=()=>edAtualId;
+function renderEds(){const g=document.getElementById('gridEd');const l=[...DB.eds].sort((a,b)=>b.atualizado.localeCompare(a.atualizado));
+  g.innerHTML=l.map(e=>{const st={rascunho:['p-rasc','Rascunho'],pronto:['p-pronto','Pronto'],enviado:['p-env','Enviado']}[e.status];const txt=(new DOMParser().parseFromString(e.corpo||'','text/html').body.textContent||'').slice(0,110);
+    return `<div class="card ed"><div><span class="pill ${st[0]}">${st[1]}</span></div><h3>${esc(e.assunto||'(sem assunto)')}</h3><div class="mt">${esc(txt)}${txt.length>=110?'…':''}</div><div class="mt">Editado em ${fmtDH(e.atualizado)}</div>
+    <div class="acts"><button class="btn sm" onclick="abrirEd('${e.id}')">✏️ Editar</button><button class="btn sm" onclick="duplicarEd('${e.id}')">📄 Duplicar</button><button class="btn sm pri" onclick="abrirDisparo('${e.id}')">🚀 Disparar</button><button class="btn sm dan" onclick="apagarEd('${e.id}')">🗑️</button></div></div>`}).join('');
+  document.getElementById('emptyEd').hidden=DB.eds.length>0;}
+function novaEd(){const e={id:uid(),assunto:'',pre:'',corpo:'<h2>Olá, {{nome}}!</h2><p>Escreva aqui o conteúdo da sua newsletter...</p>',status:'rascunho',criado:new Date().toISOString(),atualizado:new Date().toISOString()};DB.eds.push(e);salvar();abrirEd(e.id);}
+function abrirEd(id){const e=DB.eds.find(x=>x.id===id);if(!e)return;edAtualId=id;document.getElementById('edTit').textContent=e.assunto||'Nova edição';document.getElementById('edAssunto').value=e.assunto;document.getElementById('edPre').value=e.pre||'';document.getElementById('edStatus').value=e.status;document.getElementById('rte').innerHTML=e.corpo;document.getElementById('edSalvo').textContent='';atualizarPv();abrir('mEd');}
+function salvarEd(silent){const e=DB.eds.find(x=>x.id===edAtualId);if(!e)return;e.assunto=document.getElementById('edAssunto').value;e.pre=document.getElementById('edPre').value;e.status=document.getElementById('edStatus').value;e.corpo=document.getElementById('rte').innerHTML;e.atualizado=new Date().toISOString();salvar();document.getElementById('edSalvo').textContent='💾 Rascunho salvo '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+function autoSalvar(){clearTimeout(edT);edT=setTimeout(()=>{salvarEd();atualizarPv();},500);}
+function fecharEd(){salvarEd();fechar('mEd');renderEds();}
+function apagarEd(id){const e=DB.eds.find(x=>x.id===(typeof id==='function'?id():id));if(!e)return;if(!confirm(`Apagar a edição "${e.assunto||'sem assunto'}"?`))return;DB.eds=DB.eds.filter(x=>x.id!==e.id);salvar();fechar('mEd');renderEds();}
+function duplicarEd(id){const e=DB.eds.find(x=>x.id===id);const n={...e,id:uid(),assunto:e.assunto+' (cópia)',status:'rascunho',criado:new Date().toISOString(),atualizado:new Date().toISOString()};DB.eds.push(n);salvar();renderEds();toast('Duplicada');}
+function cmd(c,v){document.getElementById('rte').focus();document.execCommand(c,false,v||null);autoSalvar();}
+function inserirLink(){const u=prompt('Endereço do link (https://...)');if(u)cmd('createLink',u);}
+function inserirImg(){const u=prompt('URL da imagem (precisa estar publicada na internet, ex: https://...)');if(u)cmd('insertHTML',`<p><img src="${esc(u)}" alt=""></p>`);}
+function inserirBotao(){const t=prompt('Texto do botão','Saiba mais');if(!t)return;const u=prompt('Link do botão (https://...)');if(!u)return;cmd('insertHTML',`<p><a href="${esc(u)}" data-botao="1">${esc(t)}</a></p><p><br></p>`);}
+function inserirNome(){cmd('insertText','{{nome}}');}
+function pvW(w){document.getElementById('pvFrame').style.maxWidth=w+'px';}
+function atualizarPv(){const e=DB.eds.find(x=>x.id===edAtualId);if(!e)return;document.getElementById('pvFrame').srcdoc=montarEmail(e,'Maria');}
+
+/* ===== monta o HTML final do e-mail (estilos inline p/ Gmail) ===== */
+function montarEmail(e,nome){const c=DB.cfg,cor=c.cor||'#0f7b6c';
+  const d=new DOMParser().parseFromString('<div>'+(e.corpo||'')+'</div>','text/html'),r=d.body.firstChild;
+  const S={h2:`margin:0 0 14px;font-size:22px;line-height:1.3;color:#1d2733;font-family:Arial,sans-serif`,h3:`margin:20px 0 10px;font-size:17px;color:${cor};font-family:Arial,sans-serif`,p:`margin:0 0 14px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`,ul:`margin:0 0 14px;padding-left:22px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`,li:`margin-bottom:6px`,a:`color:${cor};text-decoration:underline`,img:`max-width:100%;height:auto;display:block;border-radius:8px;border:0`,div:`font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`};
+  r.querySelectorAll('*').forEach(el=>{const t=el.tagName.toLowerCase();if(t==='a'&&el.dataset.botao){el.setAttribute('style',`display:inline-block;background:${cor};color:#ffffff;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:bold;font-family:Arial,sans-serif;font-size:15px`);el.removeAttribute('data-botao');el.setAttribute('target','_blank');}
+    else if(S[t]){el.setAttribute('style',S[t]+(el.getAttribute('style')?';'+el.getAttribute('style'):''));if(t==='a')el.setAttribute('target','_blank');}});
+  const corpo=r.innerHTML.replace(/\{\{\s*nome\s*\}\}/gi,esc(primeiroNome(nome)||''));
+  const rod=esc(c.rodape||'').replace(/\n/g,'<br>');
+  return `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(e.assunto)}</title></head>
+<body style="margin:0;padding:0;background:#eef1f4">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">${esc(e.pre||'')}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f4"><tr><td align="center" style="padding:24px 10px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden">
+<tr><td style="background:${cor};padding:22px 28px;text-align:center">${c.logo?`<img src="${esc(c.logo)}" alt="${esc(c.nome)}" style="max-height:50px;border:0">`:`<span style="color:#ffffff;font-size:20px;font-weight:bold;font-family:Arial,sans-serif">${esc(c.nome)}</span>`}</td></tr>
+<tr><td style="padding:28px">${corpo}</td></tr>
+<tr><td style="padding:18px 28px;background:#f6f8fa;text-align:center;font-size:12px;line-height:1.5;color:#8a96a3;font-family:Arial,sans-serif">${rod}${c.site?`<br><a href="${esc(c.site)}" style="color:${cor}" target="_blank">${esc(c.site.replace(/^https?:\/\//,''))}</a>`:''}</td></tr>
+</table></td></tr></table></body></html>`;}
+function primeiroNome(n){return String(n||'').trim().split(/\s+/)[0]||'';}
+function textoPuro(e){const d=new DOMParser().parseFromString(e.corpo||'','text/html');d.querySelectorAll('br').forEach(b=>b.replaceWith('\n'));d.querySelectorAll('p,h2,h3,li,div').forEach(b=>b.append('\n'));d.querySelectorAll('a').forEach(a=>a.append(` (${a.getAttribute('href')})`));
+  return (d.body.textContent.replace(/\n{3,}/g,'\n\n').trim()+'\n\n—\n'+(DB.cfg.rodape||'')).trim();}
+function baixarHTML(){salvarEd();const e=DB.eds.find(x=>x.id===edAtualId);baixar((e.assunto||'newsletter').replace(/[^\w\-]+/g,'_')+'.html',montarEmail(e,'{{nome}}').replace(esc('{{nome}}'),'{{nome}}'),'text/html');}
+
+/* ================== DISPARO ================== */
+let DISP=null;
+function publicos(){const tags=new Set();DB.insc.filter(i=>i.status==='ativo').forEach(i=>String(i.tags||'').split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>tags.add(t)));return tags;}
+function abrirDisparo(id){const eds=DB.eds;if(!eds.length)return toast('Crie uma edição primeiro');
+  document.getElementById('dEd').innerHTML=eds.map(e=>`<option value="${e.id}">${esc(e.assunto||'(sem assunto)')} — ${e.status}</option>`).join('');if(id)document.getElementById('dEd').value=id;
+  document.getElementById('dPub').innerHTML='<option value="">Todos os ativos</option>'+[...publicos()].map(t=>`<option value="${esc(t)}">Tag: ${esc(t)}</option>`).join('');
+  calcDisp();abrir('mDisp');}
+function destinatarios(tag){return DB.insc.filter(i=>i.status==='ativo'&&okEmail(i.email)&&(!tag||String(i.tags||'').split(',').map(t=>t.trim()).includes(tag)));}
+function calcDisp(){const e=DB.eds.find(x=>x.id===document.getElementById('dEd').value),tag=document.getElementById('dPub').value,tam=Math.max(1,+document.getElementById('dLote').value||50);
+  const dest=destinatarios(tag);const lotes=[];for(let i=0;i<dest.length;i+=tam)lotes.push(dest.slice(i,i+tam));DISP={e,tag,dest,lotes};
+  document.getElementById('dKp').innerHTML=`<div><b>${dest.length}</b>destinatários</div><div><b>${lotes.length}</b>lote(s)</div>`;
+  if(!e.assunto)document.getElementById('dKp').innerHTML+=`<div style="color:var(--err)"><b>⚠️</b>edição sem assunto</div>`;
+  document.getElementById('dLotes').innerHTML=lotes.map((l,i)=>`<div class="lote"><b>Lote ${i+1}/${lotes.length} · ${l.length} e-mails</b><button class="btn sm" onclick="verLote(${i})">👁️ Ver</button><button class="btn sm pri" onclick="copiarLote(${i})">📋 Copiar comando</button></div>`).join('')||'<div class="empty">Nenhum destinatário ativo nesse público.</div>';}
+function pacote(e,lista,nLote,totLote,teste){
+  const html=montarEmail(e,'{{nome}}').replace(new RegExp(esc('{{nome}}').replace(/[{}]/g,'\\$&'),'g'),'{{nome}}');
+  const j={tipo:'newsletter',teste:!!teste,lote:`${nLote}/${totLote}`,assunto:e.assunto,pre_cabecalho:e.pre||'',
+    destinatarios:lista.map(i=>({email:i.email,nome:primeiroNome(i.nome)})),corpo_html:html,corpo_texto:textoPuro(e)};
+  return `Use a skill newsletter-gmail.${teste?' ESTE É UM TESTE — envie só para o e-mail abaixo.':''}
+Envie pelo plugin do Gmail um e-mail INDIVIDUAL para cada destinatário do pacote abaixo (nunca todos juntos no Para/CC). Troque {{nome}} pelo nome de cada um (se vazio, apague o {{nome}} e a vírgula antes). Use o corpo_html como HTML; se o Gmail não aceitar HTML, use corpo_texto. No fim, me devolva o relatório no formato:
+OK email
+ERRO email motivo
+
+PACOTE:
+${JSON.stringify(j)}`;}
+function copiarLote(i){copiar(pacote(DISP.e,DISP.lotes[i],i+1,DISP.lotes.length),`Comando do lote ${i+1} copiado — cole no OpenBot`);}
+function verLote(i){alert(DISP.lotes[i].map(x=>x.email).join('\n'));}
+function copiarTeste(){const em=normE(document.getElementById('dTeste').value);if(!okEmail(em))return toast('Digite um e-mail de teste válido');copiar(pacote(DISP.e,[{email:em,nome:'Teste'}],1,1,true),'Comando de teste copiado');}
+function registrarDisparo(){if(!DISP||!DISP.dest.length)return toast('Nenhum destinatário');if(!confirm(`Registrar disparo de "${DISP.e.assunto}" para ${DISP.dest.length} pessoas e marcar a edição como Enviada?`))return;
+  DB.disp.unshift({id:uid(),data:new Date().toISOString(),edId:DISP.e.id,assunto:DISP.e.assunto,publico:DISP.tag||'Todos os ativos',itens:DISP.dest.map(i=>({email:i.email,nome:i.nome,st:'pendente',obs:''}))});
+  DISP.e.status='enviado';salvar();fechar('mDisp');tab('hist');toast('Disparo registrado. Depois cole o retorno do OpenBot.');}
+
+/* ================== HISTÓRICO ================== */
+let detId=null,retId=null;
+function renderHist(){const tb=document.getElementById('tbHist');
+  tb.innerHTML=DB.disp.map(d=>{const ok=d.itens.filter(x=>x.st==='ok').length,er=d.itens.filter(x=>x.st==='erro').length,pe=d.itens.length-ok-er;
+    return `<tr><td style="padding:10px">${fmtDH(d.data)}</td><td style="padding:10px"><b>${esc(d.assunto)}</b><div style="font-size:12px;color:var(--mut)">${esc(d.publico)}</div></td><td style="padding:10px">${d.itens.length}</td>
+    <td style="padding:10px"><span style="color:var(--ok)">✅ ${ok}</span> · <span style="color:var(--err)">❌ ${er}</span> · <span style="color:var(--warn)">⏳ ${pe}</span></td>
+    <td style="padding:6px;white-space:nowrap"><button class="btn sm" onclick="abrirRet('${d.id}')">📥 Registrar retorno</button> <button class="btn sm" onclick="abrirDet('${d.id}')">👁️</button> <button class="btn sm dan" onclick="apagarDisp('${d.id}')">🗑️</button></td></tr>`}).join('');
+  document.getElementById('emptyHist').hidden=DB.disp.length>0;}
+function abrirRet(id){retId=id;document.getElementById('retTx').value='';abrir('mRet');}
+function confirmarRet(){const d=DB.disp.find(x=>x.id===retId);let n=0,sair=0;
+  document.getElementById('retTx').value.split(/\r?\n/).forEach(l=>{const m=l.match(/[^\s@;,<>"]+@[^\s@;,<>"]+/);if(!m)return;const e=normE(m[0]);const it=d.itens.find(x=>x.email===e);
+    if(/\bSAIR\b|descadastr/i.test(l)){const i=DB.insc.find(x=>x.email===e);if(i&&i.status==='ativo'){i.status='descadastrado';sair++;}}
+    if(!it)return;if(/\bERRO\b|falh|fail|error/i.test(l)){it.st='erro';it.obs=l.replace(m[0],'').replace(/\bERRO\b/i,'').trim();}else if(/\bOK\b|enviad|sent/i.test(l)){it.st='ok';it.obs='';}n++;});
+  salvar();fechar('mRet');renderHist();renderInsc();toast(`✅ ${n} registros atualizados${sair?` · ${sair} descadastrados`:''}`);}
+function abrirDet(id){detId=id;const d=DB.disp.find(x=>x.id===id);document.getElementById('detTit').textContent=d.assunto;
+  const ok=d.itens.filter(x=>x.st==='ok').length,er=d.itens.filter(x=>x.st==='erro').length;
+  document.getElementById('detKp').innerHTML=`<div><b>${d.itens.length}</b>total</div><div><b style="color:var(--ok)">${ok}</b>enviados</div><div><b style="color:var(--err)">${er}</b>erros</div><div><b style="color:var(--warn)">${d.itens.length-ok-er}</b>pendentes</div>`;
+  document.getElementById('detTb').innerHTML=d.itens.map(x=>`<tr><td style="padding:7px 10px">${esc(x.email)}</td><td style="padding:7px 10px">${{ok:'✅ Enviado',erro:'❌ Erro',pendente:'⏳ Pendente'}[x.st]}</td><td style="padding:7px 10px;font-size:12px;color:var(--mut)">${esc(x.obs)}</td></tr>`).join('');abrir('mDet');}
+function reenviarErros(){const d=DB.disp.find(x=>x.id===detId),e=DB.eds.find(x=>x.id===d.edId);if(!e)return toast('A edição foi apagada');const l=d.itens.filter(x=>x.st!=='ok').filter(x=>DB.insc.find(i=>i.email===x.email&&i.status==='ativo'));if(!l.length)return toast('Nada pendente 🎉');copiar(pacote(e,l,1,1),`Comando p/ ${l.length} pendentes/erros copiado`);}
+function apagarDisp(id){if(!confirm('Apagar este registro de disparo do histórico?'))return;DB.disp=DB.disp.filter(x=>x.id!==id);salvar();renderHist();}
+
+/* ================== CONFIG / BACKUP ================== */
+function abrirConfig(){const c=DB.cfg;cNome.value=c.nome;cCor.value=c.cor;cSite.value=c.site;cLogo.value=c.logo;cRod.value=c.rodape;abrir('mCfg');}
+function salvarCfg(){Object.assign(DB.cfg,{nome:cNome.value.trim()||'Newsletter',cor:cCor.value,site:cSite.value.trim(),logo:cLogo.value.trim(),rodape:cRod.value});salvar();fechar('mCfg');toast('Configurações salvas');}
+function exportBackup(){baixar('backup-newsletter-'+hoje()+'.json',JSON.stringify(DB,null,1),'application/json');}
+function importBackup(inp){const f=inp.files[0];inp.value='';if(!f)return;f.text().then(t=>{const d=JSON.parse(t);if(!d.insc||!d.eds)throw 0;if(!confirm('Restaurar backup? Os dados atuais serão SUBSTITUÍDOS.'))return;DB=d;salvar();renderInsc();renderEds();renderHist();fechar('mCfg');toast('Backup restaurado');}).catch(()=>toast('❌ Arquivo de backup inválido'));}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('mEd').classList.contains('on'))fecharEd();else document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'));}});
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m&&m.id!=='mEd')m.classList.remove('on');}));
+renderStats();renderInsc();
+</script>
+</body>
+</html>
