@@ -3,151 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel Newsletter</title>
+<title>Dedica Saúde · Newsletter</title>
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--tx:#1d2733;--mut:#6b7785;--ln:#e1e6eb;--pri:#0f7b6c;--pri2:#0a5e52;--err:#c0392b;--warn:#d68910;--ok:#1e8449;--r:10px}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);font-size:14px}
-header{background:var(--pri);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-header h1{font-size:18px;margin:0;flex:1}
-header .stats{display:flex;gap:16px;font-size:13px;opacity:.95}
-header .stats b{font-size:16px}
-nav{display:flex;gap:4px;padding:0 22px;background:#fff;border-bottom:1px solid var(--ln)}
-nav button{border:0;background:none;padding:13px 16px;font-size:14px;cursor:pointer;color:var(--mut);border-bottom:3px solid transparent;font-weight:600}
-nav button.on{color:var(--pri);border-bottom-color:var(--pri)}
-main{padding:20px 22px;max-width:1200px;margin:0 auto}
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+:root{--bg:#f3f6f7;--card:#fff;--tx:#14303a;--mut:#647782;--ln:#dfe7ea;--pri:#0b5d6b;--pri2:#084a55;--acc:#13a89e;--err:#b83a2f;--warn:#b7791f;--ok:#1d7a4f;--r:12px}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;-webkit-font-smoothing:antialiased}
+header{background:#fff;border-bottom:1px solid var(--ln);padding:12px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.marca{display:flex;align-items:center;gap:10px;flex:1;min-width:220px}
+.marca svg{flex:none}
+.marca .nm{font-size:18px;font-weight:700;color:var(--pri);letter-spacing:-.2px;line-height:1}
+.marca .sb{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:1.4px;margin-top:3px}
+.marca .div{width:1px;height:30px;background:var(--ln);margin:0 6px}
+#hTitle{font-size:14px;font-weight:600;color:var(--tx);margin:0}
+header .stats{display:flex;gap:10px}
+header .stats span{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:6px 12px;font-size:12px;color:var(--mut)}
+header .stats b{font-size:15px;color:var(--pri);margin-right:3px}
+nav{display:flex;gap:2px;padding:0 28px;background:#fff;border-bottom:1px solid var(--ln);flex-wrap:wrap}
+nav button{border:0;background:none;padding:14px 18px;font-size:14px;cursor:pointer;color:var(--mut);border-bottom:2px solid transparent;font-weight:600;font-family:inherit}
+nav button:hover{color:var(--pri)}
+nav button.on{color:var(--pri);border-bottom-color:var(--acc)}
+main{padding:24px 28px;max-width:1240px;margin:0 auto}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
 .bar .sp{flex:1}
-.btn{border:1px solid var(--ln);background:#fff;padding:8px 13px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap}
-.btn:hover{background:#f0f3f5}
+.btn{border:1px solid var(--ln);background:#fff;padding:9px 15px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;font-family:inherit;transition:background .15s,border-color .15s}
+.btn:hover{background:#f2f6f7;border-color:#c9d6da}
+.btn:disabled{opacity:.5;cursor:wait}
 .btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
 .btn.pri:hover{background:var(--pri2)}
-.btn.dan{color:var(--err);border-color:#f0c4bf}
-.btn.sm{padding:4px 9px;font-size:12px}
-input[type=text],input[type=email],input[type=number],select,textarea{border:1px solid var(--ln);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;background:#fff;width:100%}
-.bar input[type=text]{width:260px}
-.card{background:var(--card);border:1px solid var(--ln);border-radius:var(--r)}
+.btn.dan{color:var(--err);border-color:#ecc9c4}
+.btn.dan:hover{background:#fbf1ef}
+.btn.sm{padding:5px 10px;font-size:12px}
+input[type=text],input[type=email],input[type=number],input[type=password],select,textarea{border:1px solid var(--ln);border-radius:8px;padding:9px 11px;font-size:14px;font-family:inherit;background:#fff;width:100%;color:var(--tx)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(19,168,158,.15)}
+.bar input[type=text]{width:280px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:var(--r);box-shadow:0 1px 2px rgba(16,48,58,.04)}
 table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:12px;color:var(--mut);font-weight:700;padding:10px;border-bottom:1px solid var(--ln);background:#fafbfc;position:sticky;top:0;text-transform:uppercase}
-td{padding:0;border-bottom:1px solid var(--ln)}
+th{text-align:left;font-size:11px;color:var(--mut);font-weight:700;padding:11px 10px;border-bottom:1px solid var(--ln);background:#f8fafb;position:sticky;top:0;text-transform:uppercase;letter-spacing:.6px;z-index:1}
+td{padding:0;border-bottom:1px solid #edf2f4}
+tr:hover td{background:#fafcfc}
 td.cell{padding:2px 4px}
-td.cell input,td.cell select{border:1px solid transparent;background:transparent;padding:7px 6px;border-radius:6px}
-td.cell input:focus,td.cell select:focus{border-color:var(--pri);background:#fff;outline:none}
+td.cell input,td.cell select{border:1px solid transparent;background:transparent;padding:7px 6px;border-radius:6px;box-shadow:none}
+td.cell input:focus,td.cell select:focus{border-color:var(--acc);background:#fff}
 td.c{text-align:center;padding:6px}
-tr.bad td.cell input[data-f=email]{color:var(--err)}
-.tw{max-height:calc(100vh - 260px);overflow:auto}
-.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
-.p-rasc{background:#fdf2e1;color:var(--warn)}.p-pronto{background:#e3f1fb;color:#1f6fa8}.p-env{background:#e3f4ea;color:var(--ok)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.ed{padding:16px;display:flex;flex-direction:column;gap:8px}
-.ed h3{margin:0;font-size:15px}
-.ed .mt{color:var(--mut);font-size:12px}
+td.p{padding:10px}
+.tw{max-height:calc(100vh - 280px);overflow:auto}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.2px}
+.p-rascunho{background:#fbf3e4;color:var(--warn)}.p-pronto{background:#e5f2f4;color:var(--pri)}.p-enviado,.p-concluido{background:#e4f3ec;color:var(--ok)}.p-enviando{background:#e5f2f4;color:var(--pri)}.p-pausado{background:#fbf3e4;color:var(--warn)}.p-cancelado{background:#f9e9e7;color:var(--err)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.ed{padding:18px;display:flex;flex-direction:column;gap:8px;border-top:3px solid var(--acc)}
+.ed h3{margin:0;font-size:15px;color:var(--tx)}
+.mt{color:var(--mut);font-size:12px}
 .ed .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.empty{padding:40px;text-align:center;color:var(--mut)}
-.modal{position:fixed;inset:0;background:rgba(15,25,35,.5);display:none;align-items:flex-start;justify-content:center;padding:30px 14px;z-index:50;overflow:auto}
+.empty{padding:48px;text-align:center;color:var(--mut)}
+.modal{position:fixed;inset:0;background:rgba(10,35,42,.45);display:none;align-items:flex-start;justify-content:center;padding:30px 14px;z-index:50;overflow:auto}
 .modal.on{display:flex}
-.mbox{background:#fff;border-radius:14px;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.mbox.lg{max-width:1100px}
-.mh{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ln)}
-.mh h2{margin:0;font-size:16px;flex:1}
-.mh .x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--mut)}
-.mb{padding:18px;display:flex;flex-direction:column;gap:12px}
-.mf{padding:12px 18px;border-top:1px solid var(--ln);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
-label.f{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:var(--mut)}
+.mbox{background:#fff;border-radius:14px;width:100%;max-width:720px;box-shadow:0 24px 60px rgba(10,35,42,.25)}
+.mbox.lg{max-width:1120px}.mbox.sm{max-width:420px}
+.mh{display:flex;align-items:center;padding:16px 20px;border-bottom:1px solid var(--ln)}
+.mh h2{margin:0;font-size:16px;flex:1;color:var(--pri)}
+.mh .x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--mut);line-height:1}
+.mb{padding:20px;display:flex;flex-direction:column;gap:12px}
+.mf{padding:14px 20px;border-top:1px solid var(--ln);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;background:#fafcfc;border-radius:0 0 14px 14px}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:var(--mut)}
 .row{display:flex;gap:12px}.row>*{flex:1}
-.tb{display:flex;gap:4px;flex-wrap:wrap;padding:6px;border:1px solid var(--ln);border-bottom:0;border-radius:8px 8px 0 0;background:#fafbfc}
-.tb button{border:1px solid transparent;background:none;padding:5px 9px;border-radius:6px;cursor:pointer;font-size:13px}
-.tb button:hover{background:#e8edf1;border-color:var(--ln)}
-.rte{min-height:320px;border:1px solid var(--ln);border-radius:0 0 8px 8px;padding:14px;outline:none;line-height:1.6;overflow:auto;max-height:55vh}
+.tb{display:flex;gap:4px;flex-wrap:wrap;padding:6px;border:1px solid var(--ln);border-bottom:0;border-radius:8px 8px 0 0;background:#f8fafb}
+.tb button{border:1px solid transparent;background:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:13px;font-family:inherit;color:var(--tx)}
+.tb button:hover{background:#e9f0f2;border-color:var(--ln)}
+.rte{min-height:320px;border:1px solid var(--ln);border-radius:0 0 8px 8px;padding:16px;outline:none;line-height:1.6;overflow:auto;max-height:55vh}
 .rte img{max-width:100%}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.pv{border:1px solid var(--ln);border-radius:8px;background:#eef1f4;overflow:hidden}
-.pv iframe{width:100%;height:560px;border:0;background:#eef1f4;display:block}
+.pv{border:1px solid var(--ln);border-radius:8px;background:#eef2f4;overflow:hidden}
+.pv iframe{width:100%;height:560px;border:0;background:#eef2f4;display:block}
 .pvbar{display:flex;gap:6px;padding:6px;border-bottom:1px solid var(--ln);background:#fff}
-.hint{font-size:12px;color:var(--mut);background:#f6f8fa;border:1px dashed var(--ln);border-radius:8px;padding:9px 11px;line-height:1.5}
-.hint code{background:#e8edf1;padding:1px 5px;border-radius:4px}
-pre.cmd{background:#0f1a24;color:#d7e3ee;padding:12px;border-radius:8px;max-height:240px;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-all;margin:0}
-.lote{border:1px solid var(--ln);border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.lote b{flex:1}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d2733;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+.hint{font-size:12px;color:var(--mut);background:#f4f8f9;border:1px solid var(--ln);border-left:3px solid var(--acc);border-radius:0;padding:10px 12px;line-height:1.55}
+.alerta{font-size:13px;background:#fbf3e4;color:#7a5410;border:1px solid #efdcb5;border-radius:10px;padding:11px 14px;margin-bottom:16px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--tx);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
 .toast.on{opacity:1}
 .kp{display:flex;gap:10px;flex-wrap:wrap}
-.kp div{background:#f6f8fa;border-radius:8px;padding:8px 12px;font-size:12px;color:var(--mut)}
-.kp b{display:block;font-size:18px;color:var(--tx)}
-@media(max-width:800px){.split{grid-template-columns:1fr}.bar input[type=text]{width:100%}header .stats{width:100%}}
+.kp div{background:#f4f8f9;border:1px solid var(--ln);border-radius:10px;padding:9px 14px;font-size:12px;color:var(--mut)}
+.kp b{display:block;font-size:19px;color:var(--pri)}
+.barra{height:7px;background:#e6eef0;border-radius:6px;overflow:hidden;min-width:120px}
+.barra i{display:block;height:100%;background:var(--acc)}
+#login{position:fixed;inset:0;background:linear-gradient(135deg,#0b5d6b 0%,#0e7c80 60%,#13a89e 100%);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+#login .box{background:#fff;border-radius:16px;padding:34px 30px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:12px;box-shadow:0 30px 70px rgba(0,0,0,.25)}
+#login .box .marca{justify-content:center;flex:none;margin-bottom:8px}
+#login h2{margin:0;font-size:17px;text-align:center;color:var(--tx)}
+#login .mt{text-align:center}
+#login .rod{font-size:11px;color:var(--mut);text-align:center;margin-top:6px}
+.sec{font-size:12px;font-weight:700;color:var(--pri);margin-top:6px;border-top:1px solid var(--ln);padding-top:14px;text-transform:uppercase;letter-spacing:.6px}
+@media(max-width:800px){.split{grid-template-columns:1fr}.bar input[type=text]{width:100%}header .stats{width:100%}header,nav,main{padding-left:14px;padding-right:14px}.marca .div,#hTitle{display:none}}
 </style>
 </head>
 <body>
-<header>
-  <h1 id="hTitle">📰 Painel Newsletter</h1>
-  <div class="stats">
-    <span><b id="sAtivos">0</b> ativos</span>
-    <span><b id="sRasc">0</b> rascunhos</span>
-    <span><b id="sEnv">0</b> enviadas</span>
+<div id="login">
+  <div class="box">
+    <div class="marca"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#0b5d6b"/><path d="M13 10v8a7 7 0 0 0 14 0v-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 25v3a5 5 0 0 0 10 0v-2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="30" cy="24" r="2.6" fill="#13a89e" stroke="#fff" stroke-width="1.6"/></svg><div><div class="nm">Dedica Saúde</div><div class="sb">Newsletter</div></div></div>
+    <h2 id="lgTit">Acessar painel</h2>
+    <div class="mt" id="lgTx">Digite a senha do painel.</div>
+    <input type="password" id="lgSenha" placeholder="Senha" onkeydown="if(event.key==='Enter')entrar()">
+    <input type="password" id="lgSenha2" placeholder="Repita a senha" hidden onkeydown="if(event.key==='Enter')entrar()">
+    <button class="btn pri" id="lgBtn" onclick="entrar()">Entrar</button>
+    <div id="lgErr" style="color:var(--err);font-size:13px;text-align:center"></div>
+    <div class="rod">Acesso restrito à equipe Dedica Saúde</div>
   </div>
-  <button class="btn sm" onclick="abrirConfig()">⚙️ Config</button>
+</div>
+
+<header>
+  <div class="marca"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#0b5d6b"/><path d="M13 10v8a7 7 0 0 0 14 0v-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M20 25v3a5 5 0 0 0 10 0v-2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="30" cy="24" r="2.6" fill="#13a89e" stroke="#fff" stroke-width="1.6"/></svg><div><div class="nm">Dedica Saúde</div><div class="sb">Newsletter</div></div><span class="div"></span><h1 id="hTitle">Painel</h1></div>
+  <div class="stats">
+    <span><b id="sAtivos">0</b>ativos</span>
+    <span><b id="sHoje">0</b>enviados hoje</span>
+    <span><b id="sRasc">0</b>rascunhos</span>
+  </div>
+  <button class="btn sm" onclick="abrirConfig()">Configurações</button>
+  <button class="btn sm" onclick="sair()">Sair</button>
 </header>
 <nav>
-  <button class="on" data-tab="insc" onclick="tab('insc')">👥 Inscritos</button>
-  <button data-tab="ed" onclick="tab('ed')">✍️ Edições / Rascunhos</button>
-  <button data-tab="hist" onclick="tab('hist')">🚀 Disparos</button>
+  <button class="on" data-tab="insc" onclick="tab('insc')">Inscritos</button>
+  <button data-tab="ed" onclick="tab('ed')">Edições / Rascunhos</button>
+  <button data-tab="hist" onclick="tab('hist')">Envios</button>
 </nav>
 <main>
-  <!-- INSCRITOS -->
+  <div id="alerta" class="alerta" hidden></div>
   <section id="t-insc">
     <div class="bar">
-      <input type="text" id="busca" placeholder="🔎 Buscar nome, e-mail ou tag..." oninput="renderInsc()">
+      <input type="text" id="busca" placeholder="Buscar nome, e-mail ou tag..." oninput="renderInsc()">
       <select id="fStatus" onchange="renderInsc()" style="width:auto">
         <option value="">Todos</option><option value="ativo">Ativos</option><option value="descadastrado">Descadastrados</option>
       </select>
       <span class="sp"></span>
-      <button class="btn" onclick="addInsc()">➕ Adicionar linha</button>
-      <button class="btn" onclick="abrirMassa()">📋 Colar vários</button>
-      <button class="btn pri" onclick="document.getElementById('fUp').click()">📤 Subir planilha</button>
+      <button class="btn" onclick="addInsc()">Adicionar linha</button>
+      <button class="btn" onclick="abrirMassa()">Colar vários</button>
+      <button class="btn pri" onclick="document.getElementById('fUp').click()">Subir planilha</button>
       <input type="file" id="fUp" accept=".xlsx,.csv,.txt" hidden onchange="lerPlanilha(this)">
-      <button class="btn" onclick="exportCSV()">⬇️ CSV</button>
+      <button class="btn" onclick="exportCSV()">CSV</button>
     </div>
     <div class="card tw">
       <table>
-        <thead><tr><th style="width:36px"></th><th>Nome</th><th>E-mail</th><th>Tags</th><th style="width:150px">Status</th><th style="width:110px">Inscrito em</th><th style="width:44px"></th></tr></thead>
+        <thead><tr><th style="width:36px"></th><th>Nome</th><th>E-mail</th><th>Tags</th><th style="width:150px">Status</th><th style="width:110px">Inscrito em</th><th style="width:80px"></th></tr></thead>
         <tbody id="tbInsc"></tbody>
       </table>
       <div id="emptyInsc" class="empty" hidden>Nenhum inscrito ainda. Suba uma planilha ou adicione na mão.</div>
     </div>
     <div class="bar" style="margin-top:10px">
-      <span id="selInfo" class="mt" style="color:var(--mut)"></span><span class="sp"></span>
-      <button class="btn dan sm" onclick="apagarSel()">🗑️ Apagar selecionados</button>
+      <span id="selInfo" class="mt"></span><span class="sp"></span>
+      <button class="btn dan sm" onclick="apagarSel()">Apagar selecionados</button>
     </div>
   </section>
 
-  <!-- EDIÇÕES -->
   <section id="t-ed" hidden>
-    <div class="bar"><span class="sp"></span><button class="btn pri" onclick="novaEd()">➕ Nova edição</button></div>
+    <div class="bar"><span class="sp"></span><button class="btn pri" onclick="novaEd()">Nova edição</button></div>
     <div class="grid" id="gridEd"></div>
     <div id="emptyEd" class="empty" hidden>Nenhuma edição. Clique em “Nova edição”.</div>
   </section>
 
-  <!-- HISTÓRICO -->
   <section id="t-hist" hidden>
+    <div class="bar"><span class="mt" id="histInfo"></span><span class="sp"></span><button class="btn sm" onclick="carregar()">Atualizar</button></div>
     <div class="card tw">
       <table>
-        <thead><tr><th>Data</th><th>Edição</th><th>Destinatários</th><th>Resultado</th><th style="width:220px"></th></tr></thead>
+        <thead><tr><th>Data</th><th>Edição</th><th>Status</th><th>Progresso</th><th style="width:260px"></th></tr></thead>
         <tbody id="tbHist"></tbody>
       </table>
-      <div id="emptyHist" class="empty" hidden>Nenhum disparo ainda.</div>
+      <div id="emptyHist" class="empty" hidden>Nenhum envio ainda.</div>
     </div>
   </section>
 </main>
 
-<!-- MODAL EDITOR -->
+<!-- EDITOR -->
 <div class="modal" id="mEd"><div class="mbox lg">
-  <div class="mh"><h2 id="edTit">Edição</h2><span id="edSalvo" class="mt" style="color:var(--mut);font-size:12px;margin-right:12px"></span><button class="x" onclick="fecharEd()">×</button></div>
+  <div class="mh"><h2 id="edTit">Edição</h2><span id="edSalvo" class="mt" style="margin-right:12px"></span><button class="x" onclick="fecharEd()">×</button></div>
   <div class="mb">
     <div class="row">
       <label class="f">Assunto<input type="text" id="edAssunto" oninput="autoSalvar()"></label>
       <label class="f" style="max-width:170px">Status<select id="edStatus" onchange="autoSalvar()"><option value="rascunho">Rascunho</option><option value="pronto">Pronto p/ envio</option><option value="enviado">Enviado</option></select></label>
     </div>
-    <label class="f">Pré-cabeçalho (texto que aparece ao lado do assunto na caixa de entrada)<input type="text" id="edPre" oninput="autoSalvar()"></label>
+    <label class="f">Pré-cabeçalho (aparece ao lado do assunto na caixa de entrada)<input type="text" id="edPre" oninput="autoSalvar()"></label>
     <div class="split">
       <div>
         <div class="tb">
@@ -158,32 +188,31 @@ pre.cmd{background:#0f1a24;color:#d7e3ee;padding:12px;border-radius:8px;max-heig
           <button onclick="cmd('italic')"><i>I</i></button>
           <button onclick="cmd('underline')"><u>S</u></button>
           <button onclick="cmd('insertUnorderedList')">• Lista</button>
-          <button onclick="inserirLink()">🔗 Link</button>
-          <button onclick="inserirImg()">🖼️ Imagem</button>
-          <button onclick="inserirBotao()">🔘 Botão</button>
-          <button onclick="inserirNome()" title="Insere o nome do inscrito">👤 {{nome}}</button>
+          <button onclick="inserirLink()">Link</button>
+          <button onclick="inserirImg()">Imagem</button>
+          <button onclick="inserirBotao()">Botão</button>
+          <button onclick="cmd('insertText','{{nome}}')" title="Nome do inscrito"> {{nome}}</button>
           <button onclick="cmd('removeFormat')" title="Limpar formatação">⌫</button>
         </div>
         <div class="rte" id="rte" contenteditable="true" oninput="autoSalvar()"></div>
       </div>
       <div class="pv">
-        <div class="pvbar"><button class="btn sm" onclick="pvW(640)">🖥️ PC</button><button class="btn sm" onclick="pvW(375)">📱 Celular</button><span style="flex:1"></span><span class="mt" style="font-size:12px;color:var(--mut);align-self:center">Pré-visualização</span></div>
+        <div class="pvbar"><button class="btn sm" onclick="pvW(640)">PC</button><button class="btn sm" onclick="pvW(375)">Celular</button><span style="flex:1"></span><span class="mt" style="align-self:center">Pré-visualização</span></div>
         <div style="display:flex;justify-content:center"><iframe id="pvFrame" style="max-width:640px"></iframe></div>
       </div>
     </div>
   </div>
   <div class="mf">
-    <button class="btn dan" onclick="apagarEd(edAtual)">🗑️ Apagar</button>
+    <button class="btn dan" onclick="apagarEd(edAtualId)">Apagar</button>
     <span style="flex:1"></span>
-    <button class="btn" onclick="baixarHTML()">⬇️ Baixar HTML</button>
-    <button class="btn" onclick="fecharEd()">Salvar rascunho e fechar</button>
-    <button class="btn pri" onclick="salvarEd(true);fecharEd();abrirDisparo(edAtualId)">🚀 Disparar</button>
+    <button class="btn" onclick="fecharEd()">Salvar e fechar</button>
+    <button class="btn pri" onclick="fecharEd().then(()=>abrirDisparo(edAtualId))">Disparar</button>
   </div>
 </div></div>
 
-<!-- MODAL IMPORTAÇÃO -->
+<!-- IMPORTAÇÃO -->
 <div class="modal" id="mImp"><div class="mbox">
-  <div class="mh"><h2>📤 Importar planilha</h2><button class="x" onclick="fechar('mImp')">×</button></div>
+  <div class="mh"><h2>Importar planilha</h2><button class="x" onclick="fechar('mImp')">×</button></div>
   <div class="mb">
     <div class="row">
       <label class="f">Coluna do E-MAIL<select id="impEmail" onchange="previewImp()"></select></label>
@@ -194,207 +223,230 @@ pre.cmd{background:#0f1a24;color:#d7e3ee;padding:12px;border-radius:8px;max-heig
     <div class="kp" id="impKp"></div>
     <div class="card" style="max-height:240px;overflow:auto"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Situação</th></tr></thead><tbody id="impPrev"></tbody></table></div>
   </div>
-  <div class="mf"><button class="btn" onclick="fechar('mImp')">Cancelar</button><button class="btn pri" onclick="confirmarImp()">Importar</button></div>
+  <div class="mf"><button class="btn" onclick="fechar('mImp')">Cancelar</button><button class="btn pri" id="btnImp" onclick="confirmarImp()">Importar</button></div>
 </div></div>
 
-<!-- MODAL COLAR -->
+<!-- COLAR -->
 <div class="modal" id="mMassa"><div class="mbox">
-  <div class="mh"><h2>📋 Colar vários e-mails</h2><button class="x" onclick="fechar('mMassa')">×</button></div>
+  <div class="mh"><h2>Colar vários e-mails</h2><button class="x" onclick="fechar('mMassa')">×</button></div>
   <div class="mb">
-    <div class="hint">Um por linha. Pode ser só o e-mail ou <code>Nome; email</code> / <code>Nome, email</code> / colado direto do Excel.</div>
+    <div class="hint">Um por linha. Pode ser só o e-mail ou <code>Nome; email</code> / <code>Nome, email</code> / colado do Excel.</div>
     <textarea id="massaTx" rows="10" placeholder="Maria Silva; maria@gmail.com&#10;joao@hotmail.com"></textarea>
     <label class="f">Tag para todos (opcional)<input type="text" id="massaTag"></label>
   </div>
   <div class="mf"><button class="btn" onclick="fechar('mMassa')">Cancelar</button><button class="btn pri" onclick="confirmarMassa()">Adicionar</button></div>
 </div></div>
 
-<!-- MODAL DISPARO -->
+<!-- DISPARO -->
 <div class="modal" id="mDisp"><div class="mbox">
-  <div class="mh"><h2>🚀 Disparo via OpenBot (Gmail)</h2><button class="x" onclick="fechar('mDisp')">×</button></div>
+  <div class="mh"><h2>Disparar newsletter</h2><button class="x" onclick="fechar('mDisp')">×</button></div>
   <div class="mb">
     <label class="f">Edição<select id="dEd" onchange="calcDisp()"></select></label>
-    <div class="row">
-      <label class="f">Público<select id="dPub" onchange="calcDisp()"></select></label>
-      <label class="f" style="max-width:160px">E-mails por lote<input type="number" id="dLote" value="50" min="1" max="500" oninput="calcDisp()"></label>
-    </div>
+    <label class="f">Para quem<select id="dPub" onchange="calcDisp()"></select></label>
     <div class="kp" id="dKp"></div>
-    <div class="hint">
-      <b>Como funciona:</b> o painel gera um comando para cada lote. Você copia e cola no chat do OpenBot (com a skill <code>newsletter-gmail</code> instalada e o plugin Gmail conectado). Ele envia um e-mail individual para cada pessoa e devolve um relatório — cole esse relatório na aba <b>Disparos → Registrar retorno</b>.<br>
-      ⚠️ Limite do Gmail: ~500 envios/dia (conta comum) ou ~2.000/dia (Google Workspace). Divida em dias se passar disso.
-    </div>
+    <div class="hint">Clique em <b>Disparar</b>e pode fechar a página: o sistema envia sozinho pelo Gmail, <b>um e-mail para cada pessoa</b>, até <b id="dLim">400</b>por dia. Se passar disso, continua no dia seguinte automaticamente. Acompanhe na aba <b>Envios</b>.</div>
+    <div class="sec">1. Primeiro, teste no seu e-mail</div>
     <div class="row">
-      <label class="f">E-mail de teste<input type="email" id="dTeste" placeholder="seu@email.com"></label>
-      <div style="display:flex;align-items:flex-end;max-width:180px"><button class="btn" style="width:100%" onclick="copiarTeste()">🧪 Copiar comando de teste</button></div>
+      <input type="email" id="dTeste" placeholder="seu@email.com">
+      <button class="btn" style="max-width:170px" id="btnTeste" onclick="enviarTeste()">Enviar teste</button>
     </div>
-    <div id="dLotes" style="display:flex;flex-direction:column;gap:8px"></div>
+    <div class="sec">2. Depois, dispare para todos</div>
   </div>
-  <div class="mf"><button class="btn" onclick="fechar('mDisp')">Fechar</button><button class="btn pri" onclick="registrarDisparo()">✅ Registrar disparo no histórico</button></div>
+  <div class="mf"><button class="btn" onclick="fechar('mDisp')">Cancelar</button><button class="btn pri" id="btnDisp" onclick="disparar()">Disparar agora</button></div>
 </div></div>
 
-<!-- MODAL RETORNO -->
-<div class="modal" id="mRet"><div class="mbox">
-  <div class="mh"><h2>📥 Registrar retorno do OpenBot</h2><button class="x" onclick="fechar('mRet')">×</button></div>
-  <div class="mb">
-    <div class="hint">Cole aqui o relatório que o OpenBot devolveu (linhas <code>OK email</code> e <code>ERRO email motivo</code>). O painel marca cada destinatário. E-mails com <code>SAIR</code> são descadastrados automaticamente.</div>
-    <textarea id="retTx" rows="10"></textarea>
-  </div>
-  <div class="mf"><button class="btn" onclick="fechar('mRet')">Cancelar</button><button class="btn pri" onclick="confirmarRet()">Registrar</button></div>
-</div></div>
-
-<!-- MODAL DETALHE DISPARO -->
+<!-- DETALHE -->
 <div class="modal" id="mDet"><div class="mbox">
   <div class="mh"><h2 id="detTit">Detalhe</h2><button class="x" onclick="fechar('mDet')">×</button></div>
-  <div class="mb"><div class="kp" id="detKp"></div><div class="card" style="max-height:380px;overflow:auto"><table><thead><tr><th>E-mail</th><th>Status</th><th>Obs.</th></tr></thead><tbody id="detTb"></tbody></table></div></div>
-  <div class="mf"><button class="btn" onclick="reenviarErros()">🔁 Copiar comando p/ reenviar pendentes/erros</button><button class="btn" onclick="fechar('mDet')">Fechar</button></div>
+  <div class="mb"><div class="kp" id="detKp"></div><div class="card" style="max-height:420px;overflow:auto"><table><thead><tr><th>E-mail</th><th>Status</th><th>Obs.</th></tr></thead><tbody id="detTb"></tbody></table></div></div>
+  <div class="mf"><button class="btn" onclick="fechar('mDet')">Fechar</button></div>
 </div></div>
 
-<!-- MODAL CONFIG -->
+<!-- CONFIG -->
 <div class="modal" id="mCfg"><div class="mbox">
-  <div class="mh"><h2>⚙️ Configurações</h2><button class="x" onclick="fechar('mCfg')">×</button></div>
+  <div class="mh"><h2>Configurações</h2><button class="x" onclick="fechar('mCfg')">×</button></div>
   <div class="mb">
-    <label class="f">Nome da newsletter<input type="text" id="cNome"></label>
+    <div class="sec" style="border:0;padding:0;margin:0">Gmail que envia</div>
+    <div class="row">
+      <label class="f">E-mail do Gmail<input type="email" id="cGU" placeholder="voce@gmail.com"></label>
+      <label class="f">Senha de app (16 letras)<input type="password" id="cGS" placeholder="deixe em branco p/ manter"></label>
+    </div>
+    <div class="row" style="align-items:center"><span class="mt" id="cGStatus"></span><button class="btn sm" style="max-width:150px" onclick="testarGmail()">Testar conexão</button></div>
+    <div class="hint">A senha de app é criada em <b>myaccount.google.com/apppasswords</b> (precisa da verificação em 2 etapas ligada). Não é a senha normal do Gmail.</div>
+    <label class="f">Limite de envios por dia<input type="number" id="cLim" min="1" max="2000"></label>
+    <div class="sec">Visual do e-mail</div>
+    <label class="f">Nome da newsletter (aparece como remetente)<input type="text" id="cNome"></label>
     <div class="row">
       <label class="f">Cor principal<input type="color" id="cCor" style="height:38px;padding:2px"></label>
       <label class="f">Site (link no rodapé)<input type="text" id="cSite"></label>
     </div>
     <label class="f">URL do logo (opcional)<input type="text" id="cLogo" placeholder="https://..."></label>
-    <label class="f">Texto do rodapé<textarea id="cRod" rows="3"></textarea></label>
-    <div class="hint">💾 Os dados ficam salvos neste navegador. Faça backup de vez em quando.</div>
-    <div class="row"><button class="btn" onclick="exportBackup()">⬇️ Baixar backup (.json)</button><button class="btn" onclick="document.getElementById('fBk').click()">⬆️ Restaurar backup</button><input type="file" id="fBk" accept=".json" hidden onchange="importBackup(this)"></div>
+    <label class="f">Texto do rodapé<textarea id="cRod" rows="2"></textarea></label>
+    <div class="hint">O link “Cancelar inscrição” é colocado sozinho em todo e-mail.</div>
+    <div class="sec">Senha do painel</div>
+    <div class="row"><input type="password" id="cSA" placeholder="Senha atual"><input type="password" id="cSN" placeholder="Nova senha"><button class="btn sm" style="max-width:110px" onclick="trocarSenha()">Trocar</button></div>
   </div>
   <div class="mf"><button class="btn" onclick="fechar('mCfg')">Cancelar</button><button class="btn pri" onclick="salvarCfg()">Salvar</button></div>
 </div></div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-/* ================== DADOS ================== */
-const KEY='painelNewsletter_v1';
-let DB={cfg:{nome:'News Dedica Saúde',cor:'#0f7b6c',site:'',logo:'',rodape:'Você recebe este e-mail porque se inscreveu na nossa newsletter.\nPara não receber mais, responda este e-mail com a palavra SAIR.'},insc:[],eds:[],disp:[]};
-try{const s=localStorage.getItem(KEY);if(s)DB=Object.assign(DB,JSON.parse(s));}catch(e){}
-function salvar(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){toast('⚠️ Não consegui salvar no navegador');}renderStats();}
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const hoje=()=>new Date().toISOString().slice(0,10);
-const fmtD=d=>d?d.slice(0,10).split('-').reverse().join('/'):'';
-const fmtDH=d=>{const x=new Date(d);return x.toLocaleDateString('pt-BR')+' '+x.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
+<script>const API='https://br-wandering-glade-be19lsjd-news.compute.c-9.us-east-2.aws.neon.tech/api/';
+let TOKEN='';try{TOKEN=localStorage.getItem('newsTok')||'';}catch(e){}
+let D={inscritos:[],edicoes:[],disparos:[],cfg:{},enviadosHoje:0};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const okEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e||'');
 const normE=e=>String(e||'').trim().toLowerCase();
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2400);}
-function abrir(id){document.getElementById(id).classList.add('on')}
-function fechar(id){document.getElementById(id).classList.remove('on')}
-function copiar(txt,msg){navigator.clipboard.writeText(txt).then(()=>toast(msg||'Copiado!')).catch(()=>{const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast(msg||'Copiado!')});}
+const fmtD=d=>d?new Date(d).toLocaleDateString('pt-BR'):'';
+const fmtDH=d=>{const x=new Date(d);return x.toLocaleDateString('pt-BR')+' '+x.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
+const $=id=>document.getElementById(id);
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800);}
+function abrir(id){$(id).classList.add('on')}
+function fechar(id){$(id).classList.remove('on')}
 function baixar(nome,conteudo,tipo){const b=new Blob([conteudo],{type:tipo});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=nome;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 
-function tab(t){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));['insc','ed','hist'].forEach(x=>document.getElementById('t-'+x).hidden=x!==t);if(t==='ed')renderEds();if(t==='hist')renderHist();}
-function renderStats(){document.getElementById('sAtivos').textContent=DB.insc.filter(i=>i.status==='ativo').length;document.getElementById('sRasc').textContent=DB.eds.filter(e=>e.status!=='enviado').length;document.getElementById('sEnv').textContent=DB.eds.filter(e=>e.status==='enviado').length;document.getElementById('hTitle').textContent='📰 '+DB.cfg.nome;}
+async function api(rota,corpo){
+  const r=await fetch(API+rota,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(corpo||{})});
+  const j=await r.json().catch(()=>({erro:'Sem resposta do servidor'}));
+  if(j.erro==='sessao'){mostrarLogin();throw new Error('sessao');}
+  if(j.erro){toast(''+j.erro);throw new Error(j.erro);}
+  return j;
+}
 
-/* ================== INSCRITOS ================== */
+/* ===== LOGIN ===== */
+let criando=false;
+async function mostrarLogin(){$('login').hidden=false;$('lgErr').textContent='';
+  try{const s=await (await fetch(API+'status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).json();criando=!s.temSenha;}catch(e){$('lgErr').textContent='Não consegui falar com o servidor.';}
+  $('lgTit').textContent=criando?'Criar senha do painel':'Acessar painel';
+  $('lgTx').textContent=criando?'Primeiro acesso: crie a senha que a equipe vai usar (mínimo 6 caracteres).':'Digite a senha do painel.';
+  $('lgSenha2').hidden=!criando;$('lgBtn').textContent=criando?'Criar senha e entrar':'Entrar';$('lgSenha').focus();}
+async function entrar(){const s=$('lgSenha').value;$('lgErr').textContent='';
+  if(criando&&s!==$('lgSenha2').value){$('lgErr').textContent='As senhas não são iguais';return;}
+  $('lgBtn').disabled=true;
+  try{const r=await fetch(API+(criando?'criarSenha':'login'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({senha:s})});const j=await r.json();
+    if(j.erro){$('lgErr').textContent=j.erro;return;}
+    TOKEN=j.token;try{localStorage.setItem('newsTok',TOKEN);}catch(e){}
+    $('login').hidden=true;$('lgSenha').value='';$('lgSenha2').value='';carregar();
+  }catch(e){$('lgErr').textContent='Erro de conexão';}finally{$('lgBtn').disabled=false;}}
+function sair(){if(!confirm('Sair do painel?'))return;TOKEN='';try{localStorage.removeItem('newsTok');}catch(e){}mostrarLogin();}
+
+/* ===== CARGA ===== */
+async function carregar(){
+  try{D=await api('dados');}catch(e){return;}
+  $('login').hidden=true;
+  $('hTitle').textContent='Painel da newsletter';
+  $('sAtivos').textContent=D.inscritos.filter(i=>i.status==='ativo').length;
+  $('sHoje').textContent=D.enviadosHoje+'/'+(D.cfg.limite_dia||400);
+  $('sRasc').textContent=D.edicoes.filter(e=>e.status!=='enviado').length;
+  const al=$('alerta');
+  if(!D.cfg.gmailOk){al.hidden=false;al.innerHTML='O Gmail ainda não está configurado. Clique em <b>Config</b>e coloque o e-mail e a senha de app.';}
+  else if(D.cfg.ultimo_erro){al.hidden=false;al.textContent=''+D.cfg.ultimo_erro;}else al.hidden=true;
+  renderInsc();renderEds();renderHist();
+}
+function tab(t){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));['insc','ed','hist'].forEach(x=>$('t-'+x).hidden=x!==t);if(t==='hist')carregar();}
+setInterval(()=>{if(!$('t-hist').hidden&&$('login').hidden&&D.disparos.some(d=>d.status==='enviando'))carregar();},15000);
+
+/* ===== INSCRITOS ===== */
 let sel=new Set();
 function renderInsc(){
-  const q=document.getElementById('busca').value.toLowerCase().trim(),fs=document.getElementById('fStatus').value;
-  const lista=DB.insc.filter(i=>(!fs||i.status===fs)&&(!q||(i.nome+' '+i.email+' '+i.tags).toLowerCase().includes(q)));
-  const tb=document.getElementById('tbInsc');
-  tb.innerHTML=lista.map(i=>`<tr data-id="${i.id}" class="${okEmail(i.email)?'':'bad'}">
-    <td class="c"><input type="checkbox" ${sel.has(i.id)?'checked':''} onchange="tSel('${i.id}',this.checked)"></td>
-    <td class="cell"><input type="text" data-f="nome" value="${esc(i.nome)}" onchange="edI('${i.id}','nome',this.value)"></td>
-    <td class="cell"><input type="text" data-f="email" value="${esc(i.email)}" onchange="edI('${i.id}','email',this.value)"></td>
-    <td class="cell"><input type="text" data-f="tags" value="${esc(i.tags)}" placeholder="—" onchange="edI('${i.id}','tags',this.value)"></td>
-    <td class="cell"><select onchange="edI('${i.id}','status',this.value)"><option value="ativo" ${i.status==='ativo'?'selected':''}>✅ Ativo</option><option value="descadastrado" ${i.status!=='ativo'?'selected':''}>🚫 Descadastrado</option></select></td>
-    <td class="c" style="color:var(--mut);font-size:12px">${fmtD(i.data)}</td>
-    <td class="c"><button class="btn sm dan" onclick="apagarI('${i.id}')">✕</button></td></tr>`).join('');
-  document.getElementById('emptyInsc').hidden=DB.insc.length>0;
-  document.getElementById('selInfo').textContent=`${lista.length} exibidos de ${DB.insc.length}`+(sel.size?` · ${sel.size} selecionados`:'');
+  const q=$('busca').value.toLowerCase().trim(),fs=$('fStatus').value;
+  const lista=D.inscritos.filter(i=>(!fs||i.status===fs)&&(!q||(i.nome+' '+i.email+' '+i.tags).toLowerCase().includes(q)));
+  const vis=lista.slice(0,1500);
+  $('tbInsc').innerHTML=vis.map(i=>`<tr data-id="${i.id}">
+    <td class="c"><input type="checkbox" ${sel.has(i.id)?'checked':''} onchange="tSel(${i.id},this.checked)"></td>
+    <td class="cell"><input type="text" data-f="nome" value="${esc(i.nome)}" onchange="edI(${i.id},'nome',this.value)"></td>
+    <td class="cell"><input type="text" data-f="email" value="${esc(i.email)}" style="${okEmail(i.email)?'':'color:var(--err)'}" onchange="edI(${i.id},'email',this.value)"></td>
+    <td class="cell"><input type="text" value="${esc(i.tags)}" placeholder="—" onchange="edI(${i.id},'tags',this.value)"></td>
+    <td class="cell"><select onchange="edI(${i.id},'status',this.value)"><option value="ativo" ${i.status==='ativo'?'selected':''}>Ativo</option><option value="descadastrado" ${i.status!=='ativo'?'selected':''}>Descadastrado</option></select></td>
+    <td class="c mt">${fmtD(i.criado_em)}</td>
+    <td class="c"><button class="btn sm dan" onclick="apagarI(${i.id})">Excluir</button></td></tr>`).join('');
+  $('emptyInsc').hidden=D.inscritos.length>0;
+  $('selInfo').textContent=`${lista.length} encontrados de ${D.inscritos.length}`+(lista.length>vis.length?' (mostrando 1.500 — use a busca)':'')+(sel.size?` · ${sel.size} selecionados`:'');
 }
 function tSel(id,v){v?sel.add(id):sel.delete(id);renderInsc();}
-function edI(id,f,v){const i=DB.insc.find(x=>x.id===id);if(!i)return;
-  if(f==='email'){v=normE(v);if(DB.insc.some(x=>x.id!==id&&x.email===v)){toast('⚠️ Esse e-mail já existe');renderInsc();return;}if(!okEmail(v))toast('⚠️ E-mail parece inválido');}
-  i[f]=v;salvar();if(f==='email'||f==='status')renderInsc();}
-function addInsc(){const i={id:uid(),nome:'',email:'',tags:'',status:'ativo',data:hoje()};DB.insc.unshift(i);salvar();document.getElementById('busca').value='';document.getElementById('fStatus').value='';renderInsc();setTimeout(()=>document.querySelector(`tr[data-id="${i.id}"] input[data-f=nome]`)?.focus(),30);}
-function apagarI(id){const i=DB.insc.find(x=>x.id===id);if(!confirm(`Apagar ${i.email||'esta linha'}?`))return;DB.insc=DB.insc.filter(x=>x.id!==id);sel.delete(id);salvar();renderInsc();}
-function apagarSel(){if(!sel.size)return toast('Nenhum selecionado');if(!confirm(`Apagar ${sel.size} inscrito(s)? Não dá pra desfazer.`))return;DB.insc=DB.insc.filter(x=>!sel.has(x.id));sel.clear();salvar();renderInsc();}
-function exportCSV(){const l=[['Nome','Email','Tags','Status','Inscrito em']].concat(DB.insc.map(i=>[i.nome,i.email,i.tags,i.status,fmtD(i.data)]));baixar('inscritos.csv','﻿'+l.map(r=>r.map(c=>'"'+String(c??'').replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv;charset=utf-8');}
+async function edI(id,f,v){const i=D.inscritos.find(x=>x.id===id);if(!i)return;const novo={...i,[f]:f==='email'?normE(v):v};
+  if(f==='email'&&!okEmail(novo.email)){toast('E-mail inválido');renderInsc();return;}
+  try{await api('inscrito',novo);Object.assign(i,novo);}catch(e){}renderInsc();}
+async function addInsc(){const em=prompt('E-mail do novo inscrito:');if(!em)return;const e=normE(em);if(!okEmail(e))return toast('E-mail inválido');
+  if(D.inscritos.some(x=>x.email===e))return toast('Esse e-mail já existe');const nome=prompt('Nome (opcional):')||'';
+  try{const r=await api('inscrito',{email:e,nome});D.inscritos.unshift({id:r.id,nome,email:e,tags:'',status:'ativo',criado_em:new Date().toISOString()});renderInsc();toast('Adicionado');}catch(x){}}
+async function apagarI(id){const i=D.inscritos.find(x=>x.id===id);if(!confirm(`Apagar ${i.email}?`))return;try{await api('apagarInscritos',{ids:[id]});D.inscritos=D.inscritos.filter(x=>x.id!==id);sel.delete(id);renderInsc();}catch(e){}}
+async function apagarSel(){if(!sel.size)return toast('Nenhum selecionado');if(!confirm(`Apagar ${sel.size} inscrito(s)? Não dá pra desfazer.`))return;
+  try{await api('apagarInscritos',{ids:[...sel]});D.inscritos=D.inscritos.filter(x=>!sel.has(x.id));sel.clear();renderInsc();}catch(e){}}
+function exportCSV(){const l=[['Nome','Email','Tags','Status','Inscrito em']].concat(D.inscritos.map(i=>[i.nome,i.email,i.tags,i.status,fmtD(i.criado_em)]));baixar('inscritos.csv','﻿'+l.map(r=>r.map(c=>'"'+String(c??'').replace(/"/g,'""')+'"').join(';')).join('\r\n'),'text/csv;charset=utf-8');}
+async function enviarLista(lista){let novos=0;for(let i=0;i<lista.length;i+=1000){const r=await api('importar',{lista:lista.slice(i,i+1000)});novos+=r.novos;}await carregar();return novos;}
+function abrirMassa(){$('massaTx').value='';$('massaTag').value='';abrir('mMassa');}
+async function confirmarMassa(){const tag=$('massaTag').value.trim();const l=[];
+  $('massaTx').value.split(/\r?\n/).forEach(x=>{x=x.trim();const m=x.match(/[^\s@;,\t<>"]+@[^\s@;,\t<>"]+/);if(!m)return;const e=normE(m[0]);if(!okEmail(e))return;l.push({email:e,nome:x.replace(m[0],'').replace(/[;,\t<>"]/g,' ').replace(/\s+/g,' ').trim(),tags:tag});});
+  if(!l.length)return toast('Nenhum e-mail válido');try{const n=await enviarLista(l);fechar('mMassa');toast(`${n} novos adicionados`);}catch(e){}}
 
-/* colar vários */
-function abrirMassa(){document.getElementById('massaTx').value='';document.getElementById('massaTag').value='';abrir('mMassa');}
-function confirmarMassa(){const tag=document.getElementById('massaTag').value.trim();let add=0,dup=0,inv=0;const ex=new Set(DB.insc.map(i=>i.email));
-  document.getElementById('massaTx').value.split(/\r?\n/).forEach(l=>{l=l.trim();if(!l)return;const m=l.match(/[^\s@;,\t<>"]+@[^\s@;,\t<>"]+/);if(!m){inv++;return;}const e=normE(m[0]);if(!okEmail(e)){inv++;return;}if(ex.has(e)){dup++;return;}
-    let nome=l.replace(m[0],'').replace(/[;,\t<>"]/g,' ').replace(/\s+/g,' ').trim();ex.add(e);DB.insc.unshift({id:uid(),nome,email:e,tags:tag,status:'ativo',data:hoje()});add++;});
-  salvar();renderInsc();fechar('mMassa');toast(`✅ ${add} adicionados · ${dup} repetidos · ${inv} inválidos`);}
-
-/* ===== leitura de planilha (CSV / XLSX sem biblioteca) ===== */
+/* planilha (CSV/XLSX sem biblioteca) */
 let IMP={cab:[],linhas:[]};
 async function lerPlanilha(inp){const f=inp.files[0];inp.value='';if(!f)return;
   try{let rows;if(/\.xlsx$/i.test(f.name))rows=await lerXLSX(await f.arrayBuffer());else rows=lerCSV(await lerTexto(f));
-    rows=rows.filter(r=>r.some(c=>String(c).trim()));if(rows.length<1)return toast('Planilha vazia');
-    // detecta se 1ª linha é cabeçalho
+    rows=rows.filter(r=>r.some(c=>String(c).trim()));if(!rows.length)return toast('Planilha vazia');
     const temCab=!rows[0].some(c=>okEmail(normE(c)));
     IMP.cab=temCab?rows[0].map((c,i)=>String(c).trim()||('Coluna '+(i+1))):rows[0].map((c,i)=>'Coluna '+(i+1));
     IMP.linhas=temCab?rows.slice(1):rows;
-    const opts=(sem)=>(sem?'<option value="-1">— nenhuma —</option>':'')+IMP.cab.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');
-    const sE=document.getElementById('impEmail'),sN=document.getElementById('impNome'),sT=document.getElementById('impTag');
-    sE.innerHTML=opts(false);sN.innerHTML=opts(true);sT.innerHTML=opts(true);
-    let iE=IMP.cab.findIndex(c=>/e-?mail/i.test(c));if(iE<0){iE=IMP.cab.findIndex((c,i)=>IMP.linhas.slice(0,20).some(r=>okEmail(normE(r[i]))));}if(iE<0)iE=0;
-    const iN=IMP.cab.findIndex(c=>/^(nome|name|cliente|contato|raz)/i.test(c.trim()));
-    const iT=IMP.cab.findIndex(c=>/tag|grupo|categoria|segmento/i.test(c));
-    sE.value=iE;sN.value=iN;sT.value=iT;document.getElementById('impTagFix').value='';
+    const opts=sem=>(sem?'<option value="-1">— nenhuma —</option>':'')+IMP.cab.map((c,i)=>`<option value="${i}">${esc(c)}</option>`).join('');
+    $('impEmail').innerHTML=opts(false);$('impNome').innerHTML=opts(true);$('impTag').innerHTML=opts(true);
+    let iE=IMP.cab.findIndex(c=>/e-?mail/i.test(c));if(iE<0)iE=IMP.cab.findIndex((c,i)=>IMP.linhas.slice(0,20).some(r=>okEmail(normE(r[i]))));if(iE<0)iE=0;
+    $('impEmail').value=iE;$('impNome').value=IMP.cab.findIndex(c=>/^(nome|name|cliente|contato|raz)/i.test(c.trim()));$('impTag').value=IMP.cab.findIndex(c=>/tag|grupo|categoria|segmento/i.test(c));$('impTagFix').value='';
     previewImp();abrir('mImp');
-  }catch(e){console.error(e);toast('❌ Não consegui ler esse arquivo');}
-}
+  }catch(e){console.error(e);toast('Não consegui ler esse arquivo');}}
 function lerTexto(f){return f.arrayBuffer().then(b=>{let t=new TextDecoder('utf-8').decode(b);if(t.includes('�'))t=new TextDecoder('windows-1252').decode(b);return t.replace(/^﻿/,'');});}
-function lerCSV(t){const d=(t.split('\n')[0].match(/;/g)||[]).length>=(t.split('\n')[0].match(/,/g)||[]).length?';':(t.includes('\t')?'\t':',');
+function lerCSV(t){const l0=t.split('\n')[0];const d=(l0.match(/;/g)||[]).length>=(l0.match(/,/g)||[]).length&&(l0.match(/;/g)||[]).length?';':(l0.includes('\t')?'\t':',');
   const rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++;}else q=false;}else c+=ch;}else if(ch==='"')q=true;else if(ch===d){r.push(c);c='';}else if(ch==='\n'){r.push(c.replace(/\r$/,''));rows.push(r);r=[];c='';}else c+=ch;}
   if(c||r.length){r.push(c.replace(/\r$/,''));rows.push(r);}return rows;}
 async function unzip(buf){const dv=new DataView(buf),u8=new Uint8Array(buf);let eo=-1;for(let i=buf.byteLength-22;i>=0;i--){if(dv.getUint32(i,true)===0x06054b50){eo=i;break;}}if(eo<0)throw'zip';
   const n=dv.getUint16(eo+10,true);let p=dv.getUint32(eo+16,true);const files={};
   for(let k=0;k<n;k++){const met=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lo=dv.getUint32(p+42,true);
-    const nome=new TextDecoder().decode(u8.subarray(p+46,p+46+nl));files[nome]={met,cs,lo};p+=46+nl+el+cl;}
+    files[new TextDecoder().decode(u8.subarray(p+46,p+46+nl))]={met,cs,lo};p+=46+nl+el+cl;}
   return async nome=>{const f=files[nome];if(!f)return null;const ds=f.lo+30+dv.getUint16(f.lo+26,true)+dv.getUint16(f.lo+28,true);const data=u8.slice(ds,ds+f.cs);
-    if(f.met===0)return new TextDecoder().decode(data);const st=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));return await new Response(st).text();};}
+    if(f.met===0)return new TextDecoder().decode(data);return await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();};}
 async function lerXLSX(buf){const get=await unzip(buf),X=s=>new DOMParser().parseFromString(s,'application/xml');
   const ss=[];const sst=await get('xl/sharedStrings.xml');if(sst)X(sst).querySelectorAll('si').forEach(si=>ss.push([...si.getElementsByTagName('t')].map(t=>t.textContent).join('')));
-  let path='xl/worksheets/sheet1.xml';try{const wb=X(await get('xl/workbook.xml')),rid=wb.getElementsByTagName('sheet')[0].getAttribute('r:id'),rels=X(await get('xl/_rels/workbook.xml.rels'));const rel=[...rels.getElementsByTagName('Relationship')].find(r=>r.getAttribute('Id')===rid);if(rel){let t=rel.getAttribute('Target');path=t.startsWith('/')?t.slice(1):'xl/'+t;}}catch(e){}
+  let path='xl/worksheets/sheet1.xml';try{const wb=X(await get('xl/workbook.xml')),rid=wb.getElementsByTagName('sheet')[0].getAttribute('r:id'),rels=X(await get('xl/_rels/workbook.xml.rels'));const rel=[...rels.getElementsByTagName('Relationship')].find(r=>r.getAttribute('Id')===rid);if(rel){const t=rel.getAttribute('Target');path=t.startsWith('/')?t.slice(1):'xl/'+t;}}catch(e){}
   const sh=X(await get(path));const rows=[];
   [...sh.getElementsByTagName('row')].forEach(row=>{const r=[];[...row.getElementsByTagName('c')].forEach(c=>{const ref=c.getAttribute('r')||'';let col=0;for(const ch of ref.replace(/\d/g,''))col=col*26+ch.charCodeAt(0)-64;col--;
     const t=c.getAttribute('t'),v=c.getElementsByTagName('v')[0]?.textContent??'';let val;if(t==='s')val=ss[+v]??'';else if(t==='inlineStr')val=[...c.getElementsByTagName('t')].map(x=>x.textContent).join('');else val=v;r[col<0?r.length:col]=val;});
     rows.push([...r].map(x=>x??''));});return rows;}
-function calcImp(){const iE=+document.getElementById('impEmail').value,iN=+document.getElementById('impNome').value,iT=+document.getElementById('impTag').value,fix=document.getElementById('impTagFix').value.trim();
-  const ex=new Set(DB.insc.map(i=>i.email)),vistos=new Set();return IMP.linhas.map(r=>{const e=normE(r[iE]);const nome=iN>=0?String(r[iN]??'').trim():'';let tags=iT>=0?String(r[iT]??'').trim():'';if(fix)tags=tags?tags+', '+fix:fix;
+function calcImp(){const iE=+$('impEmail').value,iN=+$('impNome').value,iT=+$('impTag').value,fix=$('impTagFix').value.trim();
+  const ex=new Set(D.inscritos.map(i=>i.email)),vistos=new Set();return IMP.linhas.map(r=>{const e=normE(r[iE]);const nome=iN>=0?String(r[iN]??'').trim():'';let tags=iT>=0?String(r[iT]??'').trim():'';if(fix)tags=tags?tags+', '+fix:fix;
     let sit='novo';if(!okEmail(e))sit='inválido';else if(ex.has(e)||vistos.has(e))sit='repetido';vistos.add(e);return{nome,email:e,tags,sit};});}
 function previewImp(){const l=calcImp(),c=s=>l.filter(x=>x.sit===s).length;
-  document.getElementById('impKp').innerHTML=`<div><b>${l.length}</b>linhas</div><div><b style="color:var(--ok)">${c('novo')}</b>novos</div><div><b style="color:var(--warn)">${c('repetido')}</b>repetidos</div><div><b style="color:var(--err)">${c('inválido')}</b>inválidos</div>`;
-  document.getElementById('impPrev').innerHTML=l.slice(0,100).map(x=>`<tr><td class="cell" style="padding:7px 10px">${esc(x.nome)}</td><td style="padding:7px 10px">${esc(x.email)}</td><td style="padding:7px 10px;color:${x.sit==='novo'?'var(--ok)':x.sit==='repetido'?'var(--warn)':'var(--err)'}">${x.sit}</td></tr>`).join('');}
-function confirmarImp(){const n=calcImp().filter(x=>x.sit==='novo');if(!n.length)return toast('Nada novo para importar');n.forEach(x=>DB.insc.push({id:uid(),nome:x.nome,email:x.email,tags:x.tags,status:'ativo',data:hoje()}));salvar();renderInsc();fechar('mImp');toast(`✅ ${n.length} inscritos importados`);}
+  $('impKp').innerHTML=`<div><b>${l.length}</b>linhas</div><div><b style="color:var(--ok)">${c('novo')}</b>novos</div><div><b style="color:var(--warn)">${c('repetido')}</b>repetidos</div><div><b style="color:var(--err)">${c('inválido')}</b>inválidos</div>`;
+  $('impPrev').innerHTML=l.slice(0,100).map(x=>`<tr><td class="p">${esc(x.nome)}</td><td class="p">${esc(x.email)}</td><td class="p" style="color:${x.sit==='novo'?'var(--ok)':x.sit==='repetido'?'var(--warn)':'var(--err)'}">${x.sit}</td></tr>`).join('');}
+async function confirmarImp(){const n=calcImp().filter(x=>x.sit==='novo');if(!n.length)return toast('Nada novo para importar');$('btnImp').disabled=true;
+  try{const k=await enviarLista(n);fechar('mImp');toast(`${k} inscritos importados`);}catch(e){}finally{$('btnImp').disabled=false;}}
 
-/* ================== EDIÇÕES ================== */
-let edAtualId=null,edT=null;const edAtual=()=>edAtualId;
-function renderEds(){const g=document.getElementById('gridEd');const l=[...DB.eds].sort((a,b)=>b.atualizado.localeCompare(a.atualizado));
-  g.innerHTML=l.map(e=>{const st={rascunho:['p-rasc','Rascunho'],pronto:['p-pronto','Pronto'],enviado:['p-env','Enviado']}[e.status];const txt=(new DOMParser().parseFromString(e.corpo||'','text/html').body.textContent||'').slice(0,110);
-    return `<div class="card ed"><div><span class="pill ${st[0]}">${st[1]}</span></div><h3>${esc(e.assunto||'(sem assunto)')}</h3><div class="mt">${esc(txt)}${txt.length>=110?'…':''}</div><div class="mt">Editado em ${fmtDH(e.atualizado)}</div>
-    <div class="acts"><button class="btn sm" onclick="abrirEd('${e.id}')">✏️ Editar</button><button class="btn sm" onclick="duplicarEd('${e.id}')">📄 Duplicar</button><button class="btn sm pri" onclick="abrirDisparo('${e.id}')">🚀 Disparar</button><button class="btn sm dan" onclick="apagarEd('${e.id}')">🗑️</button></div></div>`}).join('');
-  document.getElementById('emptyEd').hidden=DB.eds.length>0;}
-function novaEd(){const e={id:uid(),assunto:'',pre:'',corpo:'<h2>Olá, {{nome}}!</h2><p>Escreva aqui o conteúdo da sua newsletter...</p>',status:'rascunho',criado:new Date().toISOString(),atualizado:new Date().toISOString()};DB.eds.push(e);salvar();abrirEd(e.id);}
-function abrirEd(id){const e=DB.eds.find(x=>x.id===id);if(!e)return;edAtualId=id;document.getElementById('edTit').textContent=e.assunto||'Nova edição';document.getElementById('edAssunto').value=e.assunto;document.getElementById('edPre').value=e.pre||'';document.getElementById('edStatus').value=e.status;document.getElementById('rte').innerHTML=e.corpo;document.getElementById('edSalvo').textContent='';atualizarPv();abrir('mEd');}
-function salvarEd(silent){const e=DB.eds.find(x=>x.id===edAtualId);if(!e)return;e.assunto=document.getElementById('edAssunto').value;e.pre=document.getElementById('edPre').value;e.status=document.getElementById('edStatus').value;e.corpo=document.getElementById('rte').innerHTML;e.atualizado=new Date().toISOString();salvar();document.getElementById('edSalvo').textContent='💾 Rascunho salvo '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
-function autoSalvar(){clearTimeout(edT);edT=setTimeout(()=>{salvarEd();atualizarPv();},500);}
-function fecharEd(){salvarEd();fechar('mEd');renderEds();}
-function apagarEd(id){const e=DB.eds.find(x=>x.id===(typeof id==='function'?id():id));if(!e)return;if(!confirm(`Apagar a edição "${e.assunto||'sem assunto'}"?`))return;DB.eds=DB.eds.filter(x=>x.id!==e.id);salvar();fechar('mEd');renderEds();}
-function duplicarEd(id){const e=DB.eds.find(x=>x.id===id);const n={...e,id:uid(),assunto:e.assunto+' (cópia)',status:'rascunho',criado:new Date().toISOString(),atualizado:new Date().toISOString()};DB.eds.push(n);salvar();renderEds();toast('Duplicada');}
-function cmd(c,v){document.getElementById('rte').focus();document.execCommand(c,false,v||null);autoSalvar();}
+/* ===== EDIÇÕES ===== */
+let edAtualId=null,edT=null,salvando=Promise.resolve();
+function renderEds(){const st={rascunho:'Rascunho',pronto:'Pronto',enviado:'Enviado'};
+  $('gridEd').innerHTML=D.edicoes.map(e=>{const txt=(new DOMParser().parseFromString(e.corpo||'','text/html').body.textContent||'').slice(0,110);
+    return `<div class="card ed"><div><span class="pill p-${e.status}">${st[e.status]||e.status}</span></div><h3>${esc(e.assunto||'(sem assunto)')}</h3><div class="mt">${esc(txt)}${txt.length>=110?'…':''}</div><div class="mt">Editado em ${fmtDH(e.atualizado_em)}</div>
+    <div class="acts"><button class="btn sm" onclick="abrirEd(${e.id})">Editar</button><button class="btn sm" onclick="duplicarEd(${e.id})">Duplicar</button><button class="btn sm pri" onclick="abrirDisparo(${e.id})">Disparar</button><button class="btn sm dan" onclick="apagarEd(${e.id})"></button></div></div>`}).join('');
+  $('emptyEd').hidden=D.edicoes.length>0;}
+async function novaEd(){try{const r=await api('edicao',{corpo:'<h2>Olá, {{nome}}!</h2><p>Escreva aqui o conteúdo da sua newsletter...</p>'});await carregar();abrirEd(r.id);}catch(e){}}
+function abrirEd(id){const e=D.edicoes.find(x=>x.id===id);if(!e)return;edAtualId=id;$('edTit').textContent=e.assunto||'Nova edição';$('edAssunto').value=e.assunto;$('edPre').value=e.pre||'';$('edStatus').value=e.status;$('rte').innerHTML=e.corpo;$('edSalvo').textContent='';atualizarPv();abrir('mEd');}
+function salvarEd(){const e=D.edicoes.find(x=>x.id===edAtualId);if(!e)return Promise.resolve();Object.assign(e,{assunto:$('edAssunto').value,pre:$('edPre').value,status:$('edStatus').value,corpo:$('rte').innerHTML,atualizado_em:new Date().toISOString()});
+  salvando=api('edicao',e).then(()=>{$('edSalvo').textContent='Salvo '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}).catch(()=>{$('edSalvo').textContent='Não salvou';});return salvando;}
+function autoSalvar(){$('edSalvo').textContent='...';clearTimeout(edT);edT=setTimeout(()=>{salvarEd();atualizarPv();},800);}
+async function fecharEd(){clearTimeout(edT);await salvarEd();fechar('mEd');renderEds();}
+async function apagarEd(id){const e=D.edicoes.find(x=>x.id===id);if(!e)return;if(!confirm(`Apagar a edição "${e.assunto||'sem assunto'}"?`))return;try{await api('apagarEdicao',{id});fechar('mEd');await carregar();}catch(x){}}
+async function duplicarEd(id){const e=D.edicoes.find(x=>x.id===id);try{await api('edicao',{assunto:e.assunto+' (cópia)',pre:e.pre,corpo:e.corpo});await carregar();toast('Duplicada');}catch(x){}}
+function cmd(c,v){$('rte').focus();document.execCommand(c,false,v||null);autoSalvar();}
 function inserirLink(){const u=prompt('Endereço do link (https://...)');if(u)cmd('createLink',u);}
-function inserirImg(){const u=prompt('URL da imagem (precisa estar publicada na internet, ex: https://...)');if(u)cmd('insertHTML',`<p><img src="${esc(u)}" alt=""></p>`);}
+function inserirImg(){const u=prompt('URL da imagem (precisa estar publicada na internet, https://...)');if(u)cmd('insertHTML',`<p><img src="${esc(u)}" alt=""></p>`);}
 function inserirBotao(){const t=prompt('Texto do botão','Saiba mais');if(!t)return;const u=prompt('Link do botão (https://...)');if(!u)return;cmd('insertHTML',`<p><a href="${esc(u)}" data-botao="1">${esc(t)}</a></p><p><br></p>`);}
-function inserirNome(){cmd('insertText','{{nome}}');}
-function pvW(w){document.getElementById('pvFrame').style.maxWidth=w+'px';}
-function atualizarPv(){const e=DB.eds.find(x=>x.id===edAtualId);if(!e)return;document.getElementById('pvFrame').srcdoc=montarEmail(e,'Maria');}
+function pvW(w){$('pvFrame').style.maxWidth=w+'px';}
+function atualizarPv(){const e=D.edicoes.find(x=>x.id===edAtualId);if(!e)return;$('pvFrame').srcdoc=montarEmail(e).replace(/\{\{\s*nome\s*\}\}/gi,'Maria').replace(/\{\{sair\}\}/g,'#');}
 
-/* ===== monta o HTML final do e-mail (estilos inline p/ Gmail) ===== */
-function montarEmail(e,nome){const c=DB.cfg,cor=c.cor||'#0f7b6c';
+function montarEmail(e){const c=D.cfg,cor=c.cor||'#0f7b6c';
   const d=new DOMParser().parseFromString('<div>'+(e.corpo||'')+'</div>','text/html'),r=d.body.firstChild;
-  const S={h2:`margin:0 0 14px;font-size:22px;line-height:1.3;color:#1d2733;font-family:Arial,sans-serif`,h3:`margin:20px 0 10px;font-size:17px;color:${cor};font-family:Arial,sans-serif`,p:`margin:0 0 14px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`,ul:`margin:0 0 14px;padding-left:22px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`,li:`margin-bottom:6px`,a:`color:${cor};text-decoration:underline`,img:`max-width:100%;height:auto;display:block;border-radius:8px;border:0`,div:`font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif`};
+  const S={h2:'margin:0 0 14px;font-size:22px;line-height:1.3;color:#1d2733;font-family:Arial,sans-serif',h3:`margin:20px 0 10px;font-size:17px;color:${cor};font-family:Arial,sans-serif`,p:'margin:0 0 14px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif',ul:'margin:0 0 14px;padding-left:22px;font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif',li:'margin-bottom:6px',a:`color:${cor};text-decoration:underline`,img:'max-width:100%;height:auto;display:block;border-radius:8px;border:0',div:'font-size:15px;line-height:1.6;color:#3a4652;font-family:Arial,sans-serif'};
   r.querySelectorAll('*').forEach(el=>{const t=el.tagName.toLowerCase();if(t==='a'&&el.dataset.botao){el.setAttribute('style',`display:inline-block;background:${cor};color:#ffffff;text-decoration:none;padding:12px 26px;border-radius:8px;font-weight:bold;font-family:Arial,sans-serif;font-size:15px`);el.removeAttribute('data-botao');el.setAttribute('target','_blank');}
-    else if(S[t]){el.setAttribute('style',S[t]+(el.getAttribute('style')?';'+el.getAttribute('style'):''));if(t==='a')el.setAttribute('target','_blank');}});
-  const corpo=r.innerHTML.replace(/\{\{\s*nome\s*\}\}/gi,esc(primeiroNome(nome)||''));
+    else if(S[t]){el.setAttribute('style',S[t]);if(t==='a')el.setAttribute('target','_blank');}});
   const rod=esc(c.rodape||'').replace(/\n/g,'<br>');
   return `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(e.assunto)}</title></head>
 <body style="margin:0;padding:0;background:#eef1f4">
@@ -402,75 +454,65 @@ function montarEmail(e,nome){const c=DB.cfg,cor=c.cor||'#0f7b6c';
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f4"><tr><td align="center" style="padding:24px 10px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden">
 <tr><td style="background:${cor};padding:22px 28px;text-align:center">${c.logo?`<img src="${esc(c.logo)}" alt="${esc(c.nome)}" style="max-height:50px;border:0">`:`<span style="color:#ffffff;font-size:20px;font-weight:bold;font-family:Arial,sans-serif">${esc(c.nome)}</span>`}</td></tr>
-<tr><td style="padding:28px">${corpo}</td></tr>
-<tr><td style="padding:18px 28px;background:#f6f8fa;text-align:center;font-size:12px;line-height:1.5;color:#8a96a3;font-family:Arial,sans-serif">${rod}${c.site?`<br><a href="${esc(c.site)}" style="color:${cor}" target="_blank">${esc(c.site.replace(/^https?:\/\//,''))}</a>`:''}</td></tr>
+<tr><td style="padding:28px">${r.innerHTML}</td></tr>
+<tr><td style="padding:18px 28px;background:#f6f8fa;text-align:center;font-size:12px;line-height:1.5;color:#8a96a3;font-family:Arial,sans-serif">${rod}${c.site?`<br><a href="${esc(c.site)}" style="color:${cor}" target="_blank">${esc(c.site.replace(/^https?:\/\//,''))}</a>`:''}<br><a href="{{sair}}" style="color:#8a96a3" target="_blank">Cancelar inscrição</a></td></tr>
 </table></td></tr></table></body></html>`;}
-function primeiroNome(n){return String(n||'').trim().split(/\s+/)[0]||'';}
 function textoPuro(e){const d=new DOMParser().parseFromString(e.corpo||'','text/html');d.querySelectorAll('br').forEach(b=>b.replaceWith('\n'));d.querySelectorAll('p,h2,h3,li,div').forEach(b=>b.append('\n'));d.querySelectorAll('a').forEach(a=>a.append(` (${a.getAttribute('href')})`));
-  return (d.body.textContent.replace(/\n{3,}/g,'\n\n').trim()+'\n\n—\n'+(DB.cfg.rodape||'')).trim();}
-function baixarHTML(){salvarEd();const e=DB.eds.find(x=>x.id===edAtualId);baixar((e.assunto||'newsletter').replace(/[^\w\-]+/g,'_')+'.html',montarEmail(e,'{{nome}}').replace(esc('{{nome}}'),'{{nome}}'),'text/html');}
+  return (d.body.textContent.replace(/\n{3,}/g,'\n\n').trim()+'\n\n—\n'+(D.cfg.rodape||'')+'\nCancelar inscrição: {{sair}}').trim();}
 
-/* ================== DISPARO ================== */
-let DISP=null;
-function publicos(){const tags=new Set();DB.insc.filter(i=>i.status==='ativo').forEach(i=>String(i.tags||'').split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>tags.add(t)));return tags;}
-function abrirDisparo(id){const eds=DB.eds;if(!eds.length)return toast('Crie uma edição primeiro');
-  document.getElementById('dEd').innerHTML=eds.map(e=>`<option value="${e.id}">${esc(e.assunto||'(sem assunto)')} — ${e.status}</option>`).join('');if(id)document.getElementById('dEd').value=id;
-  document.getElementById('dPub').innerHTML='<option value="">Todos os ativos</option>'+[...publicos()].map(t=>`<option value="${esc(t)}">Tag: ${esc(t)}</option>`).join('');
-  calcDisp();abrir('mDisp');}
-function destinatarios(tag){return DB.insc.filter(i=>i.status==='ativo'&&okEmail(i.email)&&(!tag||String(i.tags||'').split(',').map(t=>t.trim()).includes(tag)));}
-function calcDisp(){const e=DB.eds.find(x=>x.id===document.getElementById('dEd').value),tag=document.getElementById('dPub').value,tam=Math.max(1,+document.getElementById('dLote').value||50);
-  const dest=destinatarios(tag);const lotes=[];for(let i=0;i<dest.length;i+=tam)lotes.push(dest.slice(i,i+tam));DISP={e,tag,dest,lotes};
-  document.getElementById('dKp').innerHTML=`<div><b>${dest.length}</b>destinatários</div><div><b>${lotes.length}</b>lote(s)</div>`;
-  if(!e.assunto)document.getElementById('dKp').innerHTML+=`<div style="color:var(--err)"><b>⚠️</b>edição sem assunto</div>`;
-  document.getElementById('dLotes').innerHTML=lotes.map((l,i)=>`<div class="lote"><b>Lote ${i+1}/${lotes.length} · ${l.length} e-mails</b><button class="btn sm" onclick="verLote(${i})">👁️ Ver</button><button class="btn sm pri" onclick="copiarLote(${i})">📋 Copiar comando</button></div>`).join('')||'<div class="empty">Nenhum destinatário ativo nesse público.</div>';}
-function pacote(e,lista,nLote,totLote,teste){
-  const html=montarEmail(e,'{{nome}}').replace(new RegExp(esc('{{nome}}').replace(/[{}]/g,'\\$&'),'g'),'{{nome}}');
-  const j={tipo:'newsletter',teste:!!teste,lote:`${nLote}/${totLote}`,assunto:e.assunto,pre_cabecalho:e.pre||'',
-    destinatarios:lista.map(i=>({email:i.email,nome:primeiroNome(i.nome)})),corpo_html:html,corpo_texto:textoPuro(e)};
-  return `Use a skill newsletter-gmail.${teste?' ESTE É UM TESTE — envie só para o e-mail abaixo.':''}
-Envie pelo plugin do Gmail um e-mail INDIVIDUAL para cada destinatário do pacote abaixo (nunca todos juntos no Para/CC). Troque {{nome}} pelo nome de cada um (se vazio, apague o {{nome}} e a vírgula antes). Use o corpo_html como HTML; se o Gmail não aceitar HTML, use corpo_texto. No fim, me devolva o relatório no formato:
-OK email
-ERRO email motivo
+/* ===== DISPARO ===== */
+function tagsAtivas(){const s=new Set();D.inscritos.filter(i=>i.status==='ativo').forEach(i=>String(i.tags||'').split(',').map(t=>t.trim()).filter(Boolean).forEach(t=>s.add(t)));return[...s];}
+function destinatarios(tag){return D.inscritos.filter(i=>i.status==='ativo'&&okEmail(i.email)&&(!tag||String(i.tags||'').split(',').map(t=>t.trim()).includes(tag)));}
+function abrirDisparo(id){if(!D.edicoes.length)return toast('Crie uma edição primeiro');
+  if(!D.cfg.gmailOk){toast('Configure o Gmail primeiro');abrirConfig();return;}
+  $('dEd').innerHTML=D.edicoes.map(e=>`<option value="${e.id}">${esc(e.assunto||'(sem assunto)')} — ${e.status}</option>`).join('');if(id)$('dEd').value=id;
+  $('dPub').innerHTML='<option value="">Todos os ativos</option>'+tagsAtivas().map(t=>`<option value="${esc(t)}">Só a tag: ${esc(t)}</option>`).join('');
+  $('dLim').textContent=D.cfg.limite_dia||400;calcDisp();abrir('mDisp');}
+function calcDisp(){const n=destinatarios($('dPub').value).length,lim=+D.cfg.limite_dia||400,livreHoje=Math.max(0,lim-D.enviadosHoje);
+  const dias=n<=livreHoje?1:1+Math.ceil((n-livreHoje)/lim);
+  $('dKp').innerHTML=`<div><b>${n}</b>pessoas</div><div><b>${dias}</b>dia(s) para terminar</div>`;}
+function edSel(){return D.edicoes.find(x=>x.id===+$('dEd').value);}
+async function enviarTeste(){const em=normE($('dTeste').value);if(!okEmail(em))return toast('Digite um e-mail de teste válido');const e=edSel();
+  $('btnTeste').disabled=true;try{await api('teste',{email:em,assunto:e.assunto,html:montarEmail(e),texto:textoPuro(e)});toast('Teste enviado! Olhe a caixa de entrada (e o spam).');}catch(x){}finally{$('btnTeste').disabled=false;}}
+async function disparar(){const e=edSel();if(!e.assunto)return toast('Essa edição está sem assunto');const tag=$('dPub').value,n=destinatarios(tag).length;if(!n)return toast('Ninguém para enviar');
+  if(!confirm(`Enviar "${e.assunto}" para ${n} pessoa(s)?\n\nDepois que começar, só dá para pausar ou cancelar o que falta.`))return;
+  $('btnDisp').disabled=true;try{const r=await api('disparar',{edicao_id:e.id,tag,assunto:e.assunto,html:montarEmail(e),texto:textoPuro(e)});fechar('mDisp');toast(`Envio começou para ${r.total} pessoas`);await carregar();tab('hist');}catch(x){}finally{$('btnDisp').disabled=false;}}
 
-PACOTE:
-${JSON.stringify(j)}`;}
-function copiarLote(i){copiar(pacote(DISP.e,DISP.lotes[i],i+1,DISP.lotes.length),`Comando do lote ${i+1} copiado — cole no OpenBot`);}
-function verLote(i){alert(DISP.lotes[i].map(x=>x.email).join('\n'));}
-function copiarTeste(){const em=normE(document.getElementById('dTeste').value);if(!okEmail(em))return toast('Digite um e-mail de teste válido');copiar(pacote(DISP.e,[{email:em,nome:'Teste'}],1,1,true),'Comando de teste copiado');}
-function registrarDisparo(){if(!DISP||!DISP.dest.length)return toast('Nenhum destinatário');if(!confirm(`Registrar disparo de "${DISP.e.assunto}" para ${DISP.dest.length} pessoas e marcar a edição como Enviada?`))return;
-  DB.disp.unshift({id:uid(),data:new Date().toISOString(),edId:DISP.e.id,assunto:DISP.e.assunto,publico:DISP.tag||'Todos os ativos',itens:DISP.dest.map(i=>({email:i.email,nome:i.nome,st:'pendente',obs:''}))});
-  DISP.e.status='enviado';salvar();fechar('mDisp');tab('hist');toast('Disparo registrado. Depois cole o retorno do OpenBot.');}
+/* ===== HISTÓRICO ===== */
+function renderHist(){const st={enviando:'Enviando…',pausado:'Pausado',concluido:'Concluído',cancelado:'Cancelado'};
+  $('histInfo').textContent=`Enviados hoje: ${D.enviadosHoje} de ${D.cfg.limite_dia||400}. O sistema verifica a fila a cada 5 minutos.`;
+  $('tbHist').innerHTML=D.disparos.map(d=>{const feito=d.ok+d.erro+d.pulado,pc=d.total?Math.round(feito/d.total*100):0;
+    return `<tr><td class="p">${fmtDH(d.criado_em)}</td><td class="p"><b>${esc(d.assunto)}</b><div class="mt">${esc(d.publico)}</div></td><td class="p"><span class="pill p-${d.status}">${st[d.status]}</span></td>
+    <td class="p"><div class="barra"><i style="width:${pc}%"></i></div><div class="mt" style="margin-top:4px">${d.ok} enviados · ${d.erro} erros · ${d.pendente} na fila · total ${d.total}</div></td>
+    <td class="p" style="white-space:nowrap">
+      <button class="btn sm" onclick="verDet(${d.id})">Ver</button>
+      ${d.status==='enviando'?`<button class="btn sm" onclick="acao(${d.id},'pausar')">Pausar</button>`:''}
+      ${d.status==='pausado'?`<button class="btn sm" onclick="acao(${d.id},'retomar')">▶ Retomar</button>`:''}
+      ${(d.status==='enviando'||d.status==='pausado')?`<button class="btn sm dan" onclick="acao(${d.id},'cancelar')">Cancelar</button>`:''}
+      ${d.erro&&d.status!=='enviando'?`<button class="btn sm" onclick="acao(${d.id},'reenviarErros')">Reenviar erros</button>`:''}
+      ${(d.status==='concluido'||d.status==='cancelado')?`<button class="btn sm dan" onclick="acao(${d.id},'apagar')"></button>`:''}
+    </td></tr>`}).join('');
+  $('emptyHist').hidden=D.disparos.length>0;}
+async function acao(id,a){const m={cancelar:'Cancelar o envio? Quem ainda não recebeu não vai receber.',apagar:'Apagar este registro do histórico?',reenviarErros:'Tentar de novo os e-mails que deram erro?'};
+  if(m[a]&&!confirm(m[a]))return;try{await api('acao',{id,acao:a});await carregar();}catch(e){}}
+async function verDet(id){const d=D.disparos.find(x=>x.id===id);try{const r=await api('envios',{id});$('detTit').textContent=d.assunto;
+  $('detKp').innerHTML=`<div><b>${d.total}</b>total</div><div><b style="color:var(--ok)">${d.ok}</b>enviados</div><div><b style="color:var(--err)">${d.erro}</b>erros</div><div><b style="color:var(--warn)">${d.pendente}</b>na fila</div>`;
+  const s={ok:'Enviado',erro:'Erro',pendente:'Na fila',pulado:'Pulado'};
+  $('detTb').innerHTML=r.lista.map(x=>`<tr><td class="p">${esc(x.email)}</td><td class="p">${s[x.status]}</td><td class="p mt">${esc(x.obs)}</td></tr>`).join('');abrir('mDet');}catch(e){}}
 
-/* ================== HISTÓRICO ================== */
-let detId=null,retId=null;
-function renderHist(){const tb=document.getElementById('tbHist');
-  tb.innerHTML=DB.disp.map(d=>{const ok=d.itens.filter(x=>x.st==='ok').length,er=d.itens.filter(x=>x.st==='erro').length,pe=d.itens.length-ok-er;
-    return `<tr><td style="padding:10px">${fmtDH(d.data)}</td><td style="padding:10px"><b>${esc(d.assunto)}</b><div style="font-size:12px;color:var(--mut)">${esc(d.publico)}</div></td><td style="padding:10px">${d.itens.length}</td>
-    <td style="padding:10px"><span style="color:var(--ok)">✅ ${ok}</span> · <span style="color:var(--err)">❌ ${er}</span> · <span style="color:var(--warn)">⏳ ${pe}</span></td>
-    <td style="padding:6px;white-space:nowrap"><button class="btn sm" onclick="abrirRet('${d.id}')">📥 Registrar retorno</button> <button class="btn sm" onclick="abrirDet('${d.id}')">👁️</button> <button class="btn sm dan" onclick="apagarDisp('${d.id}')">🗑️</button></td></tr>`}).join('');
-  document.getElementById('emptyHist').hidden=DB.disp.length>0;}
-function abrirRet(id){retId=id;document.getElementById('retTx').value='';abrir('mRet');}
-function confirmarRet(){const d=DB.disp.find(x=>x.id===retId);let n=0,sair=0;
-  document.getElementById('retTx').value.split(/\r?\n/).forEach(l=>{const m=l.match(/[^\s@;,<>"]+@[^\s@;,<>"]+/);if(!m)return;const e=normE(m[0]);const it=d.itens.find(x=>x.email===e);
-    if(/\bSAIR\b|descadastr/i.test(l)){const i=DB.insc.find(x=>x.email===e);if(i&&i.status==='ativo'){i.status='descadastrado';sair++;}}
-    if(!it)return;if(/\bERRO\b|falh|fail|error/i.test(l)){it.st='erro';it.obs=l.replace(m[0],'').replace(/\bERRO\b/i,'').trim();}else if(/\bOK\b|enviad|sent/i.test(l)){it.st='ok';it.obs='';}n++;});
-  salvar();fechar('mRet');renderHist();renderInsc();toast(`✅ ${n} registros atualizados${sair?` · ${sair} descadastrados`:''}`);}
-function abrirDet(id){detId=id;const d=DB.disp.find(x=>x.id===id);document.getElementById('detTit').textContent=d.assunto;
-  const ok=d.itens.filter(x=>x.st==='ok').length,er=d.itens.filter(x=>x.st==='erro').length;
-  document.getElementById('detKp').innerHTML=`<div><b>${d.itens.length}</b>total</div><div><b style="color:var(--ok)">${ok}</b>enviados</div><div><b style="color:var(--err)">${er}</b>erros</div><div><b style="color:var(--warn)">${d.itens.length-ok-er}</b>pendentes</div>`;
-  document.getElementById('detTb').innerHTML=d.itens.map(x=>`<tr><td style="padding:7px 10px">${esc(x.email)}</td><td style="padding:7px 10px">${{ok:'✅ Enviado',erro:'❌ Erro',pendente:'⏳ Pendente'}[x.st]}</td><td style="padding:7px 10px;font-size:12px;color:var(--mut)">${esc(x.obs)}</td></tr>`).join('');abrir('mDet');}
-function reenviarErros(){const d=DB.disp.find(x=>x.id===detId),e=DB.eds.find(x=>x.id===d.edId);if(!e)return toast('A edição foi apagada');const l=d.itens.filter(x=>x.st!=='ok').filter(x=>DB.insc.find(i=>i.email===x.email&&i.status==='ativo'));if(!l.length)return toast('Nada pendente 🎉');copiar(pacote(e,l,1,1),`Comando p/ ${l.length} pendentes/erros copiado`);}
-function apagarDisp(id){if(!confirm('Apagar este registro de disparo do histórico?'))return;DB.disp=DB.disp.filter(x=>x.id!==id);salvar();renderHist();}
+/* ===== CONFIG ===== */
+function abrirConfig(){const c=D.cfg;$('cNome').value=c.nome||'';$('cCor').value=c.cor||'#0f7b6c';$('cSite').value=c.site||'';$('cLogo').value=c.logo||'';$('cRod').value=c.rodape||'';$('cLim').value=c.limite_dia||400;
+  $('cGU').value=c.gmail_user||'';$('cGS').value='';$('cGStatus').innerHTML=c.gmailOk?'<span style="color:var(--ok)">Gmail configurado</span>':'<span style="color:var(--err)">Gmail não configurado</span>';$('cSA').value='';$('cSN').value='';abrir('mCfg');}
+async function salvarCfg(){const b={nome:$('cNome').value.trim()||'Newsletter',cor:$('cCor').value,site:$('cSite').value.trim(),logo:$('cLogo').value.trim(),rodape:$('cRod').value,limite_dia:$('cLim').value,gmail_user:$('cGU').value.trim()};
+  if($('cGS').value.trim())b.gmail_senha=$('cGS').value.trim();
+  try{await api('config',b);fechar('mCfg');await carregar();toast('Configurações salvas');}catch(e){}}
+async function testarGmail(){try{await salvarCfgSilencioso();const r=await api('testarGmail');if(r.ok){$('cGStatus').innerHTML='<span style="color:var(--ok)">Conectou no Gmail!</span>';}}catch(e){$('cGStatus').innerHTML='<span style="color:var(--err)">Não conectou</span>';}}
+async function salvarCfgSilencioso(){const b={gmail_user:$('cGU').value.trim()};if($('cGS').value.trim())b.gmail_senha=$('cGS').value.trim();await api('config',b);$('cGS').value='';await carregar();}
+async function trocarSenha(){try{const r=await api('trocarSenha',{atual:$('cSA').value,nova:$('cSN').value});TOKEN=r.token;try{localStorage.setItem('newsTok',TOKEN);}catch(e){}$('cSA').value='';$('cSN').value='';toast('Senha trocada');}catch(e){}}
 
-/* ================== CONFIG / BACKUP ================== */
-function abrirConfig(){const c=DB.cfg;cNome.value=c.nome;cCor.value=c.cor;cSite.value=c.site;cLogo.value=c.logo;cRod.value=c.rodape;abrir('mCfg');}
-function salvarCfg(){Object.assign(DB.cfg,{nome:cNome.value.trim()||'Newsletter',cor:cCor.value,site:cSite.value.trim(),logo:cLogo.value.trim(),rodape:cRod.value});salvar();fechar('mCfg');toast('Configurações salvas');}
-function exportBackup(){baixar('backup-newsletter-'+hoje()+'.json',JSON.stringify(DB,null,1),'application/json');}
-function importBackup(inp){const f=inp.files[0];inp.value='';if(!f)return;f.text().then(t=>{const d=JSON.parse(t);if(!d.insc||!d.eds)throw 0;if(!confirm('Restaurar backup? Os dados atuais serão SUBSTITUÍDOS.'))return;DB=d;salvar();renderInsc();renderEds();renderHist();fechar('mCfg');toast('Backup restaurado');}).catch(()=>toast('❌ Arquivo de backup inválido'));}
-
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('mEd').classList.contains('on'))fecharEd();else document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'));}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('mEd').classList.contains('on'))fecharEd();else document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'));}});
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m&&m.id!=='mEd')m.classList.remove('on');}));
-renderStats();renderInsc();
+if(TOKEN)carregar();else mostrarLogin();
 </script>
 </body>
 </html>
